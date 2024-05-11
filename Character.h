@@ -16,8 +16,6 @@ public:
   Character(int health);
   int get_health();
   void set_health(int health);
-  int get_money();
-  void set_money(int money);
   bool get_isAlive();
   void attack(int damage, Minion &target);
 };
