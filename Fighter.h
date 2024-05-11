@@ -7,6 +7,7 @@ class Fighter : public Character {
 public:
   Fighter(int health);
   void serratedSlash();
+  void stunningStrike();
 };
 
 #endif // FIGHTER_H
