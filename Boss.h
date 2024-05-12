@@ -4,6 +4,8 @@
 
 class Boss:public Minion{
     public:
+    Boss();
+    Boss(string name,int health,int level);
     void attack();
 };
 
