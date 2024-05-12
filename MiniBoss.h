@@ -6,7 +6,7 @@ class MiniBoss:public Minion{
     public:
     MiniBoss();
     MiniBoss(string name,int health,int level);
-    void attack();
+    void attack(int damage,Character &target);
 };
 
 

@@ -4,6 +4,8 @@
 #include <string>
 using namespace std;
 
+#include "Character.h"
+
 class Minion {
 protected:
   string name;
@@ -19,7 +21,7 @@ public:
   void set_health(int health);
   int get_level();
   bool get_isAlive();
-  virtual void attack()=0;
+  virtual void attack(int damage,Character &character)=0;
 };
 
 #endif 
