@@ -11,6 +11,7 @@ protected:
   int health;
   string equippedWeapon;
   bool isAlive;
+  static int actionPoints;
 
 public:
   Character(int health);
@@ -18,6 +19,9 @@ public:
   void set_health(int health);
   bool get_isAlive();
   void attack(int damage, Minion &target);
+  void checkHealth();
+  int get_actionPoints();
+  bool useActionPoints(int points);
 };
 
 #endif // CHARACTER_H

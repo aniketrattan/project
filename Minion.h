@@ -26,6 +26,7 @@ public:
   void set_level(int level);
   bool get_isAlive();
   void attack(int damage, Character &character);
+  void checkHealth();
 };
 
 #endif // MINION_H

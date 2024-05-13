@@ -2,12 +2,12 @@
 #include "Character.h"
 #include <string>
 
-
 Minion::Minion(string name, int health, int level) {
   this->name = name;
   this->health = health;
   this->level = level;
   isAlive = true;
+  bleed = 0;
 }
 
 string Minion::get_name() { return name; }
@@ -28,4 +28,10 @@ void Minion::set_health(int health) { this->health = health; }
 
 void Minion::attack(int damage, Character &target) {
   target.set_health(target.get_health() - damage);
+}
+
+void Minion::checkHealth() {
+  if (health <= 0) {
+    isAlive = false;
+  }
 }
