@@ -16,6 +16,12 @@ int Minion::get_health() { return health; }
 
 int Minion::get_level() { return level; }
 
+void Minion::set_level(int level) { this->level = level; }
+
+int Minion::get_bleed() { return bleed; }
+
+void Minion::set_bleed(int bleed) { this->bleed = bleed; }
+
 bool Minion::get_isAlive() { return isAlive; }
 
 void Minion::set_health(int health) { this->health = health; }
