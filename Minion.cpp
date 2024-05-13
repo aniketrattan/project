@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Minion.h"
+#include "Attack.h"
 #include <string>
 using namespace std;
 
@@ -21,10 +22,11 @@ bool Minion::get_isAlive() { return isAlive; }
 
 void Minion::set_health(int health) { this->health = health; }
 
-void Minion::attack(int damage,Character &target){
+void Minion::attack(Character &target,int damage){
   int newHealth=target.get_health()-damage;
   if(newHealth<0){
     newHealth=0; 
   }
   target.set_health(newHealth);
+  cout<<"The damage done by minion is:"<<damage<<endl;
 }

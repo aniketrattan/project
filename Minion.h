@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "Character.h"
+#include "Attack.h"
 
 class Minion {
 protected:
@@ -21,7 +22,8 @@ public:
   void set_health(int health);
   int get_level();
   bool get_isAlive();
-  virtual void attack(int damage,Character &character)=0;
+
+  void attack(Character &target,int damage);
 };
 
 #endif 

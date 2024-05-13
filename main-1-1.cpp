@@ -3,21 +3,22 @@
 #include "MiniBoss.h"
 #include "Boss.h"
 #include "Character.h" 
+#include "Attack.h"
+
+using namespace std;
 
 int main() {
-   
-    MiniBoss B("MonstorA", 500, 10);
-    Boss C("MonostorB",750,15);
-    Character player1(1000);
-    Character player2(1000);
-    Minion *miniboss = &B;
-    Minion *boss=&C;
-    int damage = 100;
-    miniboss->attack(damage, player1); 
-    cout << "The player's health is: " << player1.get_health()<< endl;
 
-    damage=300;
-    boss->attack(damage,player2);
-    cout<<"The player's health is:"<<player2.get_health()<<endl;
-    return 0;
+    Character player(100);
+    Minion minion("Minion",50,3);
+    MiniBoss miniBoss("Mini Boss",150,8);
+    Boss boss("Boss",500,10);
+
+    minion.attack(player,20);
+    miniBoss.attack(player,30);
+    boss.attack(player,100);
+
+    cout<<"Player's health is:"<<player.get_health()<<endl;
+
+    return 0;  
 }

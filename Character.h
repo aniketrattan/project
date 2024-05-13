@@ -3,7 +3,7 @@
 
 #include <string>
 using namespace std;
-
+#include "Attack.h"
 class Minion;
 
 class Character {
