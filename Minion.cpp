@@ -30,6 +30,17 @@ void Minion::attack(int damage, Character &target) {
   target.set_health(target.get_health() - damage);
 }
 
+void Minion::attack(int damage, Character &c1, Character &c2) {
+  c1.set_health(c1.get_health() - damage);
+  c2.set_health(c2.get_health() - damage);
+}
+
+void Minion::attack(int damage, Character &c1, Character &c2, Character &c3) {
+  c1.set_health(c1.get_health() - damage);
+  c2.set_health(c2.get_health() - damage);
+  c3.set_health(c3.get_health() - damage);
+}
+
 void Minion::checkHealth() {
   if (health <= 0) {
     isAlive = false;

@@ -12,6 +12,8 @@ protected:
   string equippedWeapon;
   bool isAlive;
   static int actionPoints;
+  int fire;
+  int poison;
 
 public:
   Character(int health);
@@ -22,6 +24,10 @@ public:
   void checkHealth();
   int get_actionPoints();
   bool useActionPoints(int points);
+  void set_fire(int fire);
+  int get_fire();
+  void set_poison(int poison);
+  int get_poison();
 };
 
 #endif // CHARACTER_H
