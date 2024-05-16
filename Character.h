@@ -3,7 +3,6 @@
 
 #include <string>
 using namespace std;
-<<<<<<< HEAD
 
 #include "Attack.h"
 #include "Minion.h"
@@ -16,24 +15,12 @@ protected:
   static int actionPoints;
   int fire;
   int poison;
-=======
-#include "Attack.h"
-class Minion;
-
-class Character {
-protected:
-
-  int health;
-  string equippedWeapon;
-  bool isAlive;
->>>>>>> fc5b9bc5f14da4ce3a21c54450cf28f4acb51457
 
 public:
   Character(int health);
   int get_health();
   void set_health(int health);
   bool get_isAlive();
-<<<<<<< HEAD
   void checkHealth();
   int get_actionPoints();
   bool useActionPoints(int points);
@@ -44,9 +31,6 @@ public:
 
   void attack(Attack& object,int damage);
   
-=======
-  void attack(int damage, Minion &target);
->>>>>>> fc5b9bc5f14da4ce3a21c54450cf28f4acb51457
 };
 
 #endif // CHARACTER_H

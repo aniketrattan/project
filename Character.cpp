@@ -1,22 +1,14 @@
 #include <string>
 using namespace std;
 #include "Character.h"
-<<<<<<< HEAD
-
 
 int Character::actionPoints = 5;
-=======
-#include "Minion.h"
->>>>>>> fc5b9bc5f14da4ce3a21c54450cf28f4acb51457
 
 Character::Character(int health) {
   this->health = health;
   isAlive = true;
-<<<<<<< HEAD
   fire = 0;
   poison = 0;
-=======
->>>>>>> fc5b9bc5f14da4ce3a21c54450cf28f4acb51457
 }
 
 int Character::get_health() { return health; }
@@ -25,7 +17,6 @@ void Character::set_health(int health) { this->health = health; }
 
 bool Character::get_isAlive() { return isAlive; }
 
-<<<<<<< HEAD
 void Character::checkHealth() {
   if (health <= 0) {
     isAlive = false;
@@ -57,8 +48,4 @@ void Character::attack(Attack& object,int damage) {
     newHealth=0;
   }
   object.set_health(newHealth);
-=======
-void Character::attack(int damage, Minion &target) {
-  target.set_health(target.get_health() - damage);
->>>>>>> fc5b9bc5f14da4ce3a21c54450cf28f4acb51457
 }
