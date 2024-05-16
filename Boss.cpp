@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Boss.h"
+<<<<<<< HEAD
 
 Boss::Boss(string name, int health, int level) : Minion(name, health, level) {
   srand(time(nullptr));
@@ -50,4 +51,24 @@ void Boss::attack(Attack& object,int damage) {
   }
   object.set_health(newHealth);
   cout<<"The damage by Boss is:"<<damage<<endl;
+=======
+#include <string>
+using namespace std;
+
+Boss::Boss():Minion(" ",0,0){
+    
+}
+Boss::Boss(string name,int health,int level):Minion(name,health,level){
+
+}
+void Boss::attack(Character &target,int damage){
+    int actualDamage=damage*2;
+    target.set_health(target.get_health()-actualDamage);
+    int newHealth=target.get_health()-damage;
+    if(newHealth<0){
+        newHealth=0;
+    }
+    target.set_health(newHealth);
+    cout<<"The damage by boss is:"<<actualDamage<<endl;
+>>>>>>> fc5b9bc5f14da4ce3a21c54450cf28f4acb51457
 }
