@@ -13,14 +13,26 @@ Character::Character(int health) {
 
 int Character::get_health() { return health; }
 
-void Character::set_health(int health) { this->health = health; }
+void Character::set_health(int health) { 
+  if(health>0){
+    this->health = health; 
+  }else{
+    this->health=0;
+  }
+}
 
 bool Character::get_isAlive() { return isAlive; }
 
-void Character::checkHealth() {
+bool Character::checkHealth() {
   if (health <= 0) {
+    health=0;
     isAlive = false;
+    return isAlive;
+  }else{
+     isAlive=true;
+     return isAlive;
   }
+ 
 }
 
 int Character::get_actionPoints() { return actionPoints; }
@@ -42,10 +54,10 @@ void Character::set_poison(int poison) { this->poison = poison; }
 int Character::get_poison() { return poison; }
 
 void Character::attack(Attack& object,int damage) {
-  int initialHealth=object.get_health();;
-  int newHealth=initialHealth-damage;
-  if(newHealth<0){
-    newHealth=0;
-  }
-  object.set_health(newHealth);
+    int initialHealth=object.get_health();;
+    int newHealth=initialHealth-damage;
+    if(health<0){
+      health=0;
+    }
+    object.set_health(newHealth);
 }

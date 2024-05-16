@@ -45,9 +45,6 @@ void Boss::specialAttack(Character &c1, Character &c2, Character &c3) {
 void Boss::attack(Attack& object,int damage) {
   int initialHealth=object.get_health();;
   int newHealth=initialHealth-damage;
-  if(newHealth<0){
-    newHealth=0;
-  }
   object.set_health(newHealth);
   cout<<"The damage by Boss is:"<<damage<<endl;
 }

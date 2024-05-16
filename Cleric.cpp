@@ -19,9 +19,6 @@ void Cleric::cleanse() {
 void Cleric::attack(Attack& object,int damage) {
   int initialHealth=object.get_health();;
   int newHealth=initialHealth-damage;
-  if(newHealth<0){
-    newHealth=0;
-  }
   object.set_health(newHealth);
   cout<<"The damage by Cleric is:"<<damage<<endl;
 }

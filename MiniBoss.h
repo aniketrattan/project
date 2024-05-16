@@ -1,6 +1,5 @@
 #ifndef MINIBOSS_H
 #define MINIBOSS_H
-<<<<<<< HEAD
 
 #include "Minion.h"
 #include "Character.h"
@@ -20,17 +19,3 @@ class MiniBoss : public Minion {
 
 
 
-=======
-#include "Minion.h"
-#include "Attack.h"
-
-class MiniBoss:public Minion{
-    public:
-    MiniBoss();
-    MiniBoss(string name,int health,int level);
-    void attack(Character &target,int damage);
-};
-
-
-#endif
->>>>>>> fc5b9bc5f14da4ce3a21c54450cf28f4acb51457

@@ -19,9 +19,6 @@ void Fighter::stunningStrike() { useActionPoints(1); }
 void Fighter::attack(Attack& object,int damage) {
   int initialHealth=object.get_health();;
   int newHealth=initialHealth-damage;
-  if(newHealth<0){
-    newHealth=0;
-  }
   object.set_health(newHealth);
   cout<<"The damage by Fighter is:"<<damage<<endl;
 }

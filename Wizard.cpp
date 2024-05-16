@@ -15,12 +15,11 @@ void Wizard::weakeningRay(Minion &target) {
 }
 
 void Wizard::attack(Attack& object,int damage) {
-  int initialHealth=object.get_health();;
-  int newHealth=initialHealth-damage;
-  if(newHealth<0){
-    newHealth=0;
-  }
-  object.set_health(newHealth);
-  cout<<"The damage by wizard is:"<<damage<<endl;
+    int initialHealth=object.get_health();;
+    int newHealth=initialHealth-damage;
+    if(health<0){
+      health=0;
+    }
+    object.set_health(newHealth);
 }
     
