@@ -1,6 +1,7 @@
 #include "Minion.h"
-#include "Character.h"
+
 #include <string>
+using namespace std;
 
 Minion::Minion(string name, int health, int level) {
   this->name = name;
@@ -24,25 +25,67 @@ void Minion::set_bleed(int bleed) { this->bleed = bleed; }
 
 bool Minion::get_isAlive() { return isAlive; }
 
-void Minion::set_health(int health) { this->health = health; }
-
-void Minion::attack(int damage, Character &target) {
-  target.set_health(target.get_health() - damage);
-}
-
-void Minion::attack(int damage, Character &c1, Character &c2) {
-  c1.set_health(c1.get_health() - damage);
-  c2.set_health(c2.get_health() - damage);
-}
-
-void Minion::attack(int damage, Character &c1, Character &c2, Character &c3) {
-  c1.set_health(c1.get_health() - damage);
-  c2.set_health(c2.get_health() - damage);
-  c3.set_health(c3.get_health() - damage);
+void Minion::set_health(int health) {
+  if (health > 0) {
+    this->health = health;
+  } else {
+    this->health = 0;
+  }
 }
 
 void Minion::checkHealth() {
   if (health <= 0) {
     isAlive = false;
   }
+}
+
+void Minion::attack(int damage, Attack &object) {
+  int initialHealth = object.get_health();
+  int newHealth = initialHealth - damage;
+  if (health < 0) {
+    health = 0;
+  }
+  object.set_health(newHealth);
+}
+
+void Minion::attack(int damage, Attack &object, Attack &object1) {
+  int initialHealth = object.get_health();
+  int newHealth = initialHealth - damage;
+  if (health < 0) {
+    health = 0;
+  }
+  object.set_health(newHealth);
+
+  int initialHealth1 = object1.get_health();
+  int newHealth1 = initialHealth1 - damage;
+  if (health < 0) {
+    health = 0;
+  }
+  object1.set_health(newHealth1);
+}
+
+void Minion::attack(int damage, Attack &object, Attack &object1,
+                    Attack &object2) {
+  int initialHealth = object.get_health();
+  int newHealth = initialHealth - damage;
+  if (health < 0) {
+    health = 0;
+  }
+  object.set_health(newHealth);
+
+  int initialHealth1 = object1.get_health();
+
+  int newHealth1 = initialHealth1 - damage;
+  if (health < 0) {
+    health = 0;
+  }
+  object1.set_health(newHealth1);
+
+  int initialHealth2 = object2.get_health();
+
+  int newHealth2 = initialHealth2 - damage;
+  if (health < 0) {
+    health = 0;
+  }
+  object2.set_health(newHealth2);
 }

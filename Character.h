@@ -4,9 +4,10 @@
 #include <string>
 using namespace std;
 
-class Minion;
+#include "Attack.h"
+#include "Minion.h"
 
-class Character {
+class Character : public Attack {
 protected:
   int health;
   string equippedWeapon;
@@ -20,14 +21,15 @@ public:
   int get_health();
   void set_health(int health);
   bool get_isAlive();
-  void attack(int damage, Minion &target);
-  void checkHealth();
+  bool checkHealth();
   int get_actionPoints();
   bool useActionPoints(int points);
   void set_fire(int fire);
   int get_fire();
   void set_poison(int poison);
   int get_poison();
+
+  void attack(int damage, Attack &object);
 };
 
 #endif // CHARACTER_H

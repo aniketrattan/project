@@ -1,17 +1,19 @@
 #ifndef MINION_H
 #define MINION_H
 
+#include "Attack.h"
+#include "Character.h"
 #include <string>
+
 using namespace std;
 
 class Character;
 
-class Minion {
+class Minion : public Attack {
 protected:
   string name;
   int health;
   int level;
-  void weaponDrop();
   bool isAlive;
   int bleed;
 
@@ -25,10 +27,10 @@ public:
   int get_level();
   void set_level(int level);
   bool get_isAlive();
-  void attack(int damage, Character &c1);
-  void attack(int damage, Character &c1, Character &c2);
-  void attack(int damage, Character &c1, Character &c2, Character &c3);
   void checkHealth();
+  void attack(int damage, Attack &object);
+  void attack(int damage, Attack &object, Attack &object1);
+  void attack(int damage, Attack &object, Attack &object1, Attack &object2);
 };
 
-#endif // MINION_H
+#endif // MINION_
