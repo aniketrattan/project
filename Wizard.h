@@ -7,7 +7,7 @@
 class Wizard : public Character {
 public:
   Wizard(int health);
-  void fireball();
+  void fireball(Minion &target);
   void weakeningRay(Minion &target);
 };
 

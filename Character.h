@@ -13,6 +13,7 @@ protected:
   string equippedWeapon;
   bool isAlive;
   static int actionPoints;
+  bool isBlocking;
   int fire;
   int poison;
 
@@ -28,6 +29,9 @@ public:
   int get_fire();
   void set_poison(int poison);
   int get_poison();
+  void block();          // Add the block function
+  bool get_isBlocking(); // Add a getter for isBlocking
+  void resetBlock();     // Add a function to reset blocking status
 
   void attack(int damage, Attack &object);
 };

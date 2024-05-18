@@ -52,7 +52,7 @@ void Character::set_poison(int poison) { this->poison = poison; }
 
 int Character::get_poison() { return poison; }
 
-void Character::attack( int damage, Attack &object) {
+void Character::attack(int damage, Attack &object) {
   int initialHealth = object.get_health();
   int newHealth = initialHealth - damage;
   if (health < 0) {
@@ -60,3 +60,12 @@ void Character::attack( int damage, Attack &object) {
   }
   object.set_health(newHealth);
 }
+
+void Character::block() {
+  isBlocking = true;
+  useActionPoints(1);
+}
+
+bool Character::get_isBlocking() { return isBlocking; }
+
+void Character::resetBlock() { isBlocking = false; }

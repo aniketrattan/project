@@ -48,44 +48,17 @@ void Minion::attack(int damage, Attack &object) {
   object.set_health(newHealth);
 }
 
-void Minion::attack(int damage, Attack &object, Attack &object1) {
-  int initialHealth = object.get_health();
-  int newHealth = initialHealth - damage;
-  if (health < 0) {
-    health = 0;
+void Minion::attack(int damage, Character &c1, Character &c2) {
+  if (!c1.get_isBlocking() || !c2.get_isBlocking()) {
+  c1.set_health(c1.get_health() - damage);
+  c2.set_health(c2.get_health() - damage);
   }
-  object.set_health(newHealth);
-
-  int initialHealth1 = object1.get_health();
-  int newHealth1 = initialHealth1 - damage;
-  if (health < 0) {
-    health = 0;
-  }
-  object1.set_health(newHealth1);
 }
 
-void Minion::attack(int damage, Attack &object, Attack &object1,
-                    Attack &object2) {
-  int initialHealth = object.get_health();
-  int newHealth = initialHealth - damage;
-  if (health < 0) {
-    health = 0;
+void Minion::attack(int damage, Character &c1, Character &c2, Character &c3) {
+  if (!c1.get_isBlocking() || !c2.get_isBlocking() || !c3.get_isBlocking()) {
+  c1.set_health(c1.get_health() - damage);
+  c2.set_health(c2.get_health() - damage);
+  c3.set_health(c3.get_health() - damage);
   }
-  object.set_health(newHealth);
-
-  int initialHealth1 = object1.get_health();
-
-  int newHealth1 = initialHealth1 - damage;
-  if (health < 0) {
-    health = 0;
-  }
-  object1.set_health(newHealth1);
-
-  int initialHealth2 = object2.get_health();
-
-  int newHealth2 = initialHealth2 - damage;
-  if (health < 0) {
-    health = 0;
-  }
-  object2.set_health(newHealth2);
 }
