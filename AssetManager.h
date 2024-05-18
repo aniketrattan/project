@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace project {
+namespace graphics {
     class AssetManager{
         private:
         map<string, sf::Texture> _textures;

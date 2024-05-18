@@ -1,7 +1,7 @@
 #include "StateMachine.h"
 using namespace std;
 
-namespace project {
+namespace graphics {
 
 void StateMachine::AddState(StateRef newState, bool isReplacing) {
   this->_isAdding = true;

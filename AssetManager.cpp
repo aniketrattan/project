@@ -1,6 +1,6 @@
 #include "AssetManager.h"
 
-namespace project {
+namespace graphics {
 
 void AssetManager::LoadTexture(string name, string fileName) {
     sf::Texture tex;

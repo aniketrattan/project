@@ -7,7 +7,7 @@
 #include "state.h"
 using namespace std;
 
-namespace project {
+namespace graphics {
 typedef unique_ptr<State> StateRef;
 
 // class will handle all the states of the machine
