@@ -2,7 +2,7 @@
 
 namespace graphics {
 
-MenuDisplay::MenuDisplay(GameDataRef data, vector<string> menus, int distance)
+MenuDisplay::MenuDisplay(GameDataRef data, vector<string> menus, int distance, int displacement)
     : _data(data) {
   // setting default parameter for menu display
   _menu.resize(menus.size());
@@ -14,8 +14,12 @@ MenuDisplay::MenuDisplay(GameDataRef data, vector<string> menus, int distance)
     _menu[i].setFillColor(sf::Color::White);
     _menu[i].setOrigin(_menu[i].getGlobalBounds().width / 2,
                        _menu[i].getGlobalBounds().height / 2);
-    _menu[i].setPosition(SCREEN_HEIGHT / 6 + 6 * distance * i, 4 * SCREEN_WIDTH / 7 + 20);
-
+    _menu[i].setPosition(SCREEN_HEIGHT / 6 + 6 * distance * i + displacement, 4 * SCREEN_WIDTH / 7 + 20);
+    if (i > 0){
+      if (distance == 0){
+            _menu[i].setPosition(SCREEN_HEIGHT / 6 + displacement, 4 * SCREEN_WIDTH / 7 + 70);
+      }
+    }
     if (SCREEN_HEIGHT / 6 + 6 * distance * i > SCREEN_HEIGHT + 100) {
       _menu[i].setPosition(SCREEN_HEIGHT / 6 - 20, 4 * SCREEN_WIDTH / 7 + 20 + distance);
     }

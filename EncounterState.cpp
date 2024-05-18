@@ -1,11 +1,5 @@
 #include "EncounterState.h"
 
-#include <sstream>
-
-#include "Definitions.h"
-#include "MenuDisplay.h"
-#include "NumDisplay.h"
-
 namespace graphics {
 
 EncounterState::EncounterState(GameDataRef data) : _data(data) {}
@@ -54,10 +48,12 @@ void EncounterState::Init() {
   _clericNum = new NumDisplay(_data, _cleric);
   _encounterNum = new NumDisplay(_data, _encounter);
   // menu
-  _menuEncounter = new MenuDisplay(_data, menus, 60);
+  _menuEncounter = new MenuDisplay(_data, menus, 60, 0);
   // what values will be shown from the menus vector
   menuBeginning = 1;
   menuEnd = 4;
+  // action point
+  _actionNum = new ActionPoints(_data);
 
   // round() calls round function
 
@@ -78,28 +74,34 @@ void EncounterState::handleInput() {
 
 void EncounterState::update(float dt) {
   // general menu
-  //create function to do this more descretly
+  // create function to do this more descretly
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
-    if (menuLock == 0) {
-      menuLock = 1;
-      menuBeginning = 5;
-      menuEnd = 6;
+    if (actionPoints > 0) {
+      if (menuLock == 0) {
+        menuLock = 1;
+        menuBeginning = 5;
+        menuEnd = 6;
+      }
     }
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
-    if (menuLock == 0) {
-      menuLock = 2;
-      menuBeginning = 7;
-      menuEnd = 8;
+    if (actionPoints > 0) {
+      if (menuLock == 0) {
+        menuLock = 2;
+        menuBeginning = 7;
+        menuEnd = 8;
+      }
     }
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
-    if (menuLock == 0) {
-      menuLock = 3;
-      menuBeginning = 9;
-      menuEnd = 10;
+    if (actionPoints > 0) {
+      if (menuLock == 0) {
+        menuLock = 3;
+        menuBeginning = 9;
+        menuEnd = 10;
+      }
     }
   }
 
@@ -107,7 +109,8 @@ void EncounterState::update(float dt) {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) {
     if (menuLock == 1) {
       // Fighter.serratedSlash(enemy);
-      // actions -= 1;
+      actionPoints -= 1;
+      _actionNum->UpdateAction(actionPoints);
       menuBeginning = 1;
       menuEnd = 4;
       menuLock = 0;
@@ -117,7 +120,8 @@ void EncounterState::update(float dt) {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5)) {
     if (menuLock == 1) {
       // Fighter.stunningStrike(enemy);
-      // actions -= 1;
+      actionPoints -= 1;
+      _actionNum->UpdateAction(actionPoints);
       menuBeginning = 1;
       menuEnd = 4;
       menuLock = 0;
@@ -128,7 +132,8 @@ void EncounterState::update(float dt) {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)) {
     if (menuLock == 2) {
       // Fighter.stunningStrike(enemy);
-      // actions -= 1;
+      actionPoints -= 1;
+      _actionNum->UpdateAction(actionPoints);
       menuBeginning = 1;
       menuEnd = 4;
       menuLock = 0;
@@ -138,7 +143,8 @@ void EncounterState::update(float dt) {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num7)) {
     if (menuLock == 2) {
       // Fighter.stunningStrike(enemy);
-      // actions -= 1;
+      actionPoints -= 1;
+      _actionNum->UpdateAction(actionPoints);
       menuBeginning = 1;
       menuEnd = 4;
       menuLock = 0;
@@ -149,7 +155,8 @@ void EncounterState::update(float dt) {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) {
     if (menuLock == 3) {
       // Fighter.stunningStrike(enemy);
-      // actions -= 1;
+      actionPoints -= 1;
+      _actionNum->UpdateAction(actionPoints);
       menuBeginning = 1;
       menuEnd = 4;
       menuLock = 0;
@@ -159,7 +166,8 @@ void EncounterState::update(float dt) {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num9)) {
     if (menuLock == 3) {
       // Fighter.stunningStrike(enemy);
-      // actions -= 1;
+      actionPoints -= 1;
+      _actionNum->UpdateAction(actionPoints);
       menuBeginning = 1;
       menuEnd = 4;
       menuLock = 0;
@@ -198,6 +206,9 @@ void EncounterState::Draw(float dt) {
   _clericNum->Draw();
   _encounterNum->Draw();
   _menuEncounter->Draw(menuBeginning, menuEnd);
+
+  // draw action points
+  _actionNum->Draw();
 
   // dispalys the sprites
   _data->window.display();

@@ -1,10 +1,10 @@
 #include "GameGraphic.h"
-#include "EncounterState.h"
+#include "MapState.h"
 
 graphics::GameGraphic::GameGraphic(int width, int height, string title) {
     //set the game window
   _data->window.create(sf::VideoMode(width, height), title, sf::Style::Close | sf::Style::Titlebar);
-  _data->machine.AddState(StateRef(new EncounterState(this->_data)));
+  _data->machine.AddState(StateRef(new MapState(this->_data)));
   //runs the program
   this->Run(); 
 }

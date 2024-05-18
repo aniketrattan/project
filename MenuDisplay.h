@@ -23,7 +23,7 @@ class MenuDisplay {
   std::vector<sf::Text> _menu;
 
  public:
-    MenuDisplay(GameDataRef data, vector<string> menus, int distance);
+    MenuDisplay(GameDataRef data, vector<string> menus, int distance, int displacement);
 
     void Draw(int begin, int end);
     void Update(int begin, int end);
