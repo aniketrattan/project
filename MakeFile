@@ -1,2 +1,0 @@
-mymake: showtime
-		g++ main.cpp AssetManager.cpp EncounterState.cpp GameGraphic.cpp StateMachine.cpp NumDisplay.cpp MenuDisplay.cpp ActionPoints.cpp MapState.cpp CampsiteState.cpp ShopState.cpp -o prog -lsfml-graphics -lsfml-window -lsfml-system
