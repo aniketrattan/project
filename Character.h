@@ -24,6 +24,7 @@ public:
   bool get_isAlive();
   bool checkHealth();
   int get_actionPoints();
+  void set_actionPoints(int actionPoints);
   bool useActionPoints(int points);
   void set_fire(int fire);
   int get_fire();

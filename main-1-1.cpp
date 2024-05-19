@@ -45,5 +45,5 @@ int main() {
   cout << c2.get_health() << endl;
   cout << c3.get_health() << endl;
   cout << m1.get_health() << endl;
-  cout << c1.get_actionPoints() << endl;
+  cout << c3.get_actionPoints() << endl;
 }

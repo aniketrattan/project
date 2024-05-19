@@ -36,6 +36,8 @@ bool Character::checkHealth() {
 
 int Character::get_actionPoints() { return actionPoints; }
 
+void Character::set_actionPoints(int actionPoints) { this->actionPoints = actionPoints; }
+
 bool Character::useActionPoints(int points) {
   if (actionPoints >= points) {
     actionPoints -= points;

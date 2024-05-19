@@ -1,12 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "Boss.h"
+#include "Character.h"
 #include "Cleric.h"
 #include "Fighter.h"
-#include "MiniBoss.h"
-#include "Minion.h"
 #include "Wizard.h"
+#include "Minion.h"
+#include "MiniBoss.h"
+#include "Boss.h"
+
 #include <fstream>
 #include <chrono>
 #include <ctime>

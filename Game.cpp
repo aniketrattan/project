@@ -49,6 +49,8 @@ void Game::round() {
   miniBoss->set_health(miniBoss->get_health() - miniBoss->get_bleed());
   boss->set_health(boss->get_health() - boss->get_bleed());
 
+  fighter->set_actionPoints(5);
+
   // Output the result of the round
   std::cout << "Round ended." << std::endl;
 }
