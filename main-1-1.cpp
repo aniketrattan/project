@@ -31,19 +31,17 @@ int main() {
 
   c1.serratedSlash(m1);
   m2.specialAttack(c1, c2, c3);
+  m1.attack(100, c1);
+  c1.attack(300, m2);
 
   game.round();
 
-  cout << m1.get_bleed() << endl;
-  cout << c1.get_fire() << endl;
-  cout << c2.get_fire() << endl;
-  cout << c3.get_fire() << endl;
-  cout << c1.get_poison() << endl;
-  cout << c2.get_poison() << endl;
-  cout << c3.get_poison() << endl;
   cout << c1.get_health() << endl;
   cout << c2.get_health() << endl;
   cout << c3.get_health() << endl;
-  cout << m1.get_health() << endl;
+  cout << m2.get_health() << endl;
   cout << c3.get_actionPoints() << endl;
+  cout << c1.get_isAlive() << endl;
+  cout << m2.get_isAlive() << endl;
+  cout << c2.get_money() << endl;
 }

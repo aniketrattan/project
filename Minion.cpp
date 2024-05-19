@@ -35,7 +35,10 @@ void Minion::set_health(int health) {
 
 void Minion::checkHealth() {
   if (health <= 0) {
+    health = 0;
     isAlive = false;
+  } else {
+    isAlive = true;
   }
 }
 

@@ -51,6 +51,25 @@ void Game::round() {
 
   fighter->set_actionPoints(5);
 
+  // Change the "alive" status if character/enemy dies
+  fighter->checkHealth();
+  wizard->checkHealth();
+  cleric->checkHealth();
+  minion->checkHealth();
+  miniBoss->checkHealth();
+  boss->checkHealth();
+
+  // Give money when enemy is defeated
+  if (!minion->get_isAlive()) {
+    fighter->set_money(fighter->get_money() + 20);
+  }
+  if (!miniBoss->get_isAlive()) {
+    fighter->set_money(fighter->get_money() + 50);
+  }
+  if (!boss->get_isAlive()) {
+    fighter->set_money(fighter->get_money() + 100);
+  }
+
   // Output the result of the round
   std::cout << "Round ended." << std::endl;
 }

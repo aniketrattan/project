@@ -16,13 +16,14 @@ protected:
   bool isBlocking;
   int fire;
   int poison;
+  static int money;
 
 public:
   Character(int health);
   int get_health();
   void set_health(int health);
   bool get_isAlive();
-  bool checkHealth();
+  void checkHealth();
   int get_actionPoints();
   void set_actionPoints(int actionPoints);
   bool useActionPoints(int points);
@@ -33,6 +34,8 @@ public:
   void block();          // Add the block function
   bool get_isBlocking(); // Add a getter for isBlocking
   void resetBlock();     // Add a function to reset blocking status
+  int get_money(); // Get money
+  void set_money(int money);
 
   void attack(int damage, Attack &object);
 };

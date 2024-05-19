@@ -4,6 +4,8 @@ using namespace std;
 
 int Character::actionPoints = 5;
 
+int Character::money = 0;
+
 Character::Character(int health) {
   this->health = health;
   isAlive = true;
@@ -23,14 +25,12 @@ void Character::set_health(int health) {
 
 bool Character::get_isAlive() { return isAlive; }
 
-bool Character::checkHealth() {
+void Character::checkHealth() {
   if (health <= 0) {
     health = 0;
     isAlive = false;
-    return isAlive;
   } else {
     isAlive = true;
-    return isAlive;
   }
 }
 
@@ -71,3 +71,7 @@ void Character::block() {
 bool Character::get_isBlocking() { return isBlocking; }
 
 void Character::resetBlock() { isBlocking = false; }
+
+int Character::get_money() { return money; }
+
+void Character::set_money(int money) { this->money = money;}
