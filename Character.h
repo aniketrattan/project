@@ -5,18 +5,23 @@
 using namespace std;
 
 #include "Attack.h"
+#include "Items.h"
 #include "Minion.h"
+#include "Cleric.h"
+#include <vector>
 
 class Character : public Attack {
 protected:
   int health;
-  string equippedWeapon;
   bool isAlive;
   static int actionPoints;
   int fire;
   int poison;
   static int money;
   bool isWeakening = false;
+  int protectionAmount;
+  bool isProtecting = false;
+  vector<Items> inventory;
 
 public:
   Character(int health);
@@ -36,7 +41,7 @@ public:
   void resetWeakening();
   int get_money(); // Get money
   void set_money(int money);
-
+  void addItem(const Items &item);
   void attack(int damage, Attack &object);
 };
 

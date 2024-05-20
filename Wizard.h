@@ -5,10 +5,13 @@
 #include "Minion.h"
 
 class Wizard : public Character {
+  protected:
+  bool hasRingOfFire;
 public:
   Wizard(int health);
+  void equipRingOfFire();
   void fireball(Minion &target);
-  
+  bool isProtecting = false;
 };
 
 #endif // FIGHTER_H

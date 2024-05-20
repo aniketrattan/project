@@ -5,10 +5,16 @@
 #include "Minion.h"
 
 class Fighter : public Character {
+protected:
+  bool hasReapersBlade;
+  int bleedAmount = 1;
+
 public:
   Fighter(int health);
+  void equipReapersBlade();
   void serratedSlash(Minion &target);
   void stunningStrike();
+    bool isProtecting = false;
 };
 
 #endif // FIGHTER_H

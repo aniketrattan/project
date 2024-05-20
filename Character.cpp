@@ -36,7 +36,9 @@ void Character::checkHealth() {
 
 int Character::get_actionPoints() { return actionPoints; }
 
-void Character::set_actionPoints(int actionPoints) { this->actionPoints = actionPoints; }
+void Character::set_actionPoints(int actionPoints) {
+  this->actionPoints = actionPoints;
+}
 
 bool Character::useActionPoints(int points) {
   if (actionPoints >= points) {
@@ -65,17 +67,16 @@ void Character::attack(int damage, Attack &object) {
 
 int Character::get_money() { return money; }
 
-void Character::set_money(int money) { this->money = money;}
+void Character::set_money(int money) { this->money = money; }
 
-void Character::weakeningRay() { 
-    isWeakening = true;
-    useActionPoints(1);
+void Character::addItem(const Items &item) { inventory.push_back(item); }
+
+void Character::weakeningRay() {
+  isWeakening = true;
+  useActionPoints(1);
 }
 
-bool Character::get_isWeakening() {
-    return isWeakening;
-};
+bool Character::get_isWeakening() { return isWeakening; };
 
-void Character::resetWeakening() {
-    isWeakening = false;
-}
+void Character::resetWeakening() { isWeakening = false; }
+
