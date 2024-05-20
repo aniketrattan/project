@@ -1,0 +1,11 @@
+items:
+
+fighter item: adds more damage and bleed to weapon
+Wizard item: increases damage for fireball
+Cleric item: increases damage mitagation from protection
+
+General items:
+
+Life essence: increase max health of all characters 
+Action boost: adds 1 more action point per round
+Second chance: when a character would drop to 0 health they instead go to 50% of their max. This item can only be used once.

@@ -19,6 +19,8 @@ class ActionPoints {
 
   void Draw();
   void UpdateAction(int actions);
+
+  ~ActionPoints();
 };
 
 }  // namespace graphics
