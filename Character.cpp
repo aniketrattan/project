@@ -71,6 +71,15 @@ void Character::set_money(int money) { this->money = money; }
 
 void Character::addItem(const Items &item) { inventory.push_back(item); }
 
+bool Character::hasItem(const string& itemName) const {
+    for (const auto& item : inventory) {
+        if (item.get_name() == itemName) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Character::weakeningRay() {
   isWeakening = true;
   useActionPoints(1);

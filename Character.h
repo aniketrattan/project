@@ -42,6 +42,7 @@ public:
   int get_money(); // Get money
   void set_money(int money);
   void addItem(const Items &item);
+  bool hasItem(const string& itemName) const; // Method to check for an item in inventory
   void attack(int damage, Attack &object);
 };
 
