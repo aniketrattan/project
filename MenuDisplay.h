@@ -28,7 +28,7 @@ class MenuDisplay {
     void Draw(int begin, int end);
     void Update(int begin, int end);
 
-
+    ~MenuDisplay();
 };
 
 }  // namespace project

@@ -1,12 +1,12 @@
 #ifndef numdisplay_h
 #define numdisplay_h
 #include <string>
-/*
+
 #include "Cleric.h"
 #include "Fighter.h"
 #include "Minion.h"
 #include "Wizard.h"
-*/
+
 
 #include <SFML/Graphics.hpp>
 
@@ -21,13 +21,14 @@ class NumDisplay {
   sf::Text _damage;
 
  public:
-    NumDisplay(GameDataRef data, sf::Sprite character);
+  NumDisplay(GameDataRef data, sf::Sprite character);
 
-    void Draw();
-    void UpdateHealth(int health, sf::Sprite character);
-    void UpdateDamage(int damage, sf::Sprite character);
+  void Draw();
+  void UpdateHealth(int health);
+  void UpdateDamage(int damage, string type);
 
+  ~NumDisplay();
 };
 
-}  // namespace project
+}  // namespace graphics
 #endif
