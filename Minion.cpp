@@ -1,6 +1,9 @@
 #include "Minion.h"
 
 #include <string>
+
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 Minion::Minion(string name, int health, int level) {
@@ -40,6 +43,20 @@ void Minion::checkHealth() {
   } else {
     isAlive = true;
   }
+}
+
+void Minion::specialAttack(Character &c1, Character &c2, Character &c3) {
+    // Seed the random number generator
+    srand(static_cast<unsigned int>(time(0)));
+    
+    // Choose a random character
+    int randomIndex = rand() % 3;
+    Character* targets[3] = {&c1, &c2, &c3};
+    Character* target = targets[randomIndex];
+
+    // Deal damage to the chosen character
+    int damage = 20; // or any other damage value
+    target->set_health(target->get_health() - damage);
 }
 
 void Minion::attack(int damage, Attack &object) {}

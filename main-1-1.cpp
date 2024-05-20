@@ -30,12 +30,9 @@ int main() {
   game.setCleric(&c3);
 
   c2.weakeningRay();
-  m1.attack(50, c2);
+  m2.specialAttack(c1, c2, c3);
 
   game.round();
-  cout << c2.get_isWeakening() << endl;
-
-  m1.attack(50, c2);
 
   cout << c1.get_health() << endl;
   cout << c2.get_health() << endl;
