@@ -28,6 +28,7 @@ public:
   void set_level(int level);
   bool get_isAlive();
   void checkHealth();
+  void attack(int damage, Character &c1);
   void attack(int damage, Attack &object);
   void attack(int damage, Character &c1, Character &c2);
   void attack(int damage, Character &c1, Character &c2, Character &c3);

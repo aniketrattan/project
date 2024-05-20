@@ -63,15 +63,19 @@ void Character::attack(int damage, Attack &object) {
   object.set_health(newHealth);
 }
 
-void Character::block() {
-  isBlocking = true;
-  useActionPoints(1);
-}
-
-bool Character::get_isBlocking() { return isBlocking; }
-
-void Character::resetBlock() { isBlocking = false; }
-
 int Character::get_money() { return money; }
 
 void Character::set_money(int money) { this->money = money;}
+
+void Character::weakeningRay() { 
+    isWeakening = true;
+    useActionPoints(1);
+}
+
+bool Character::get_isWeakening() {
+    return isWeakening;
+};
+
+void Character::resetWeakening() {
+    isWeakening = false;
+}

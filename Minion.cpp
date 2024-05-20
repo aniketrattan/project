@@ -42,26 +42,34 @@ void Minion::checkHealth() {
   }
 }
 
-void Minion::attack(int damage, Attack &object) {
-  int initialHealth = object.get_health();
-  int newHealth = initialHealth - damage;
-  if (health < 0) {
-    health = 0;
+void Minion::attack(int damage, Attack &object) {}
+
+void Minion::attack(int damage, Character &c1) {
+  if (c1.get_isWeakening()) {
+    c1.set_health(c1.get_health() - (damage / 2));
+  } else {
+    c1.set_health(c1.get_health() - damage);
   }
-  object.set_health(newHealth);
 }
 
 void Minion::attack(int damage, Character &c1, Character &c2) {
-  if (!c1.get_isBlocking() || !c2.get_isBlocking()) {
-  c1.set_health(c1.get_health() - damage);
-  c2.set_health(c2.get_health() - damage);
+  if (c1.get_isWeakening() || c2.get_isWeakening()) {
+    c1.set_health(c1.get_health() - (damage / 2));
+    c2.set_health(c2.get_health() - (damage / 2));
+  } else {
+    c1.set_health(c1.get_health() - damage);
+    c2.set_health(c2.get_health() - damage);
   }
 }
 
 void Minion::attack(int damage, Character &c1, Character &c2, Character &c3) {
-  if (!c1.get_isBlocking() || !c2.get_isBlocking() || !c3.get_isBlocking()) {
-  c1.set_health(c1.get_health() - damage);
-  c2.set_health(c2.get_health() - damage);
-  c3.set_health(c3.get_health() - damage);
+  if (c1.get_isWeakening() || c2.get_isWeakening() || c3.get_isWeakening()) {
+    c1.set_health(c1.get_health() - (damage / 2));
+    c2.set_health(c2.get_health() - (damage / 2));
+    c3.set_health(c3.get_health() - (damage / 2));
+  } else {
+    c1.set_health(c1.get_health() - damage);
+    c2.set_health(c2.get_health() - damage);
+    c3.set_health(c3.get_health() - damage);
   }
 }

@@ -69,6 +69,8 @@ void Game::round() {
   if (!boss->get_isAlive()) {
     fighter->set_money(fighter->get_money() + 100);
   }
+  
+  wizard->resetWeakening();
 
   // Output the result of the round
   std::cout << "Round ended." << std::endl;

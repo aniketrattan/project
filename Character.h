@@ -13,10 +13,10 @@ protected:
   string equippedWeapon;
   bool isAlive;
   static int actionPoints;
-  bool isBlocking;
   int fire;
   int poison;
   static int money;
+  bool isWeakening = false;
 
 public:
   Character(int health);
@@ -31,9 +31,9 @@ public:
   int get_fire();
   void set_poison(int poison);
   int get_poison();
-  void block();          // Add the block function
-  bool get_isBlocking(); // Add a getter for isBlocking
-  void resetBlock();     // Add a function to reset blocking status
+  void weakeningRay();
+  bool get_isWeakening();
+  void resetWeakening();
   int get_money(); // Get money
   void set_money(int money);
 

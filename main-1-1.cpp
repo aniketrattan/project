@@ -29,19 +29,15 @@ int main() {
   game.setWizard(&c2);
   game.setCleric(&c3);
 
-  c1.serratedSlash(m1);
-  m2.specialAttack(c1, c2, c3);
-  m1.attack(100, c1);
-  c1.attack(300, m2);
+  c2.weakeningRay();
+  m1.attack(50, c2);
 
   game.round();
+  cout << c2.get_isWeakening() << endl;
+
+  m1.attack(50, c2);
 
   cout << c1.get_health() << endl;
   cout << c2.get_health() << endl;
   cout << c3.get_health() << endl;
-  cout << m2.get_health() << endl;
-  cout << c3.get_actionPoints() << endl;
-  cout << c1.get_isAlive() << endl;
-  cout << m2.get_isAlive() << endl;
-  cout << c2.get_money() << endl;
 }
