@@ -1,5 +1,15 @@
 #include "EncounterState.h"
 
+#include "Boss.h"
+#include "Character.h"
+#include "Cleric.h"
+#include "Fighter.h"
+#include "Game.h"
+#include "MapState.h"
+#include "MiniBoss.h"
+#include "Minion.h"
+#include "Wizard.h"
+
 namespace graphics {
 
 EncounterState::EncounterState(GameDataRef data) : _data(data) {}
@@ -55,13 +65,28 @@ void EncounterState::Init() {
   // action point
   _actionNum = new ActionPoints(_data);
 
-  // round() calls round function
+  // make values for entites
+  m1 = new Minion("Minion", 100, 1);
+  m2 = new MiniBoss("MiniBoss", 250, 2);
+  m3 = new Boss("Boss", 500, 3);
+  c1 = new Fighter(100);
+  c2 = new Wizard(100);
+  c3 = new Cleric(100);
 
-  //_fighterNum->UpdateHealth(Fighter.get_health(),_fighter);
-  //_wizardNum->UpdateHealth(Wizard.get_health(),_wizard);
-  //_clericNum->UpdateHealth(Cleric.get_health(),_cleric);
-  //_encounterNum->UpdateHealth(Minion.get_health(),_encounter);
+  game.setMinion(m1);
+  game.setMiniBoss(m2);
+  game.setBoss(m3);
+  game.setFighter(c1);
+  game.setWizard(c2);
+  game.setCleric(c3);
+
+  // round() calls round function
+  _fighterNum->UpdateHealth(c1->get_health());
+  _wizardNum->UpdateHealth(c2->get_health());
+  _clericNum->UpdateHealth(c3->get_health());
+  _encounterNum->UpdateHealth(m1->get_health());
 }
+
 void EncounterState::handleInput() {
   sf::Event event;
 
@@ -69,124 +94,146 @@ void EncounterState::handleInput() {
     if (sf::Event::Closed == event.type) {
       _data->window.close();
     }
+    if (event.type == (sf::Event::KeyPressed)) {
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)) {
+        m1->attack(10, c1[0]);
+        game.round();
+        actionPoints = 2;
+        _actionNum->UpdateAction(actionPoints);
+        // updates health
+        _fighterNum->UpdateHealth(c1->get_health());
+        _wizardNum->UpdateHealth(c2->get_health());
+        _clericNum->UpdateHealth(c3->get_health());
+        _encounterNum->UpdateHealth(m1->get_health());
+      }
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
+        if (actionPoints > 0) {
+          if (menuLock == 0) {
+            menuLock = 1;
+            menuBeginning = 5;
+            menuEnd = 6;
+          }
+        }
+      }
+
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
+        if (actionPoints > 0) {
+          if (menuLock == 0) {
+            menuLock = 2;
+            menuBeginning = 7;
+            menuEnd = 8;
+          }
+        }
+      }
+
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
+        if (actionPoints > 0) {
+          if (menuLock == 0) {
+            menuLock = 3;
+            menuBeginning = 9;
+            menuEnd = 10;
+          }
+        }
+      }
+
+      // fighter menu
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) {
+        if (menuLock == 1) {
+          c1->serratedSlash(m1[0]);
+          actionPoints -= 1;
+          _actionNum->UpdateAction(actionPoints);
+          menuBeginning = 1;
+          menuEnd = 4;
+          menuLock = 0;
+          _encounterNum->UpdateHealth(m1->get_health());
+        }
+      }
+
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5)) {
+        if (menuLock == 1) {
+          // make new attack anchor howl which redirects all attacks to the fighter.
+          actionPoints -= 1;
+          _actionNum->UpdateAction(actionPoints);
+          menuBeginning = 1;
+          menuEnd = 4;
+          menuLock = 0;
+          _encounterNum->UpdateHealth(m1->get_health());
+        }
+      }
+
+      // wizard menu
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)) {
+        if (menuLock == 2) {
+          // Fighter.stunningStrike(enemy);
+          actionPoints -= 1;
+          _actionNum->UpdateAction(actionPoints);
+          menuBeginning = 1;
+          menuEnd = 4;
+          menuLock = 0;
+          _encounterNum->UpdateHealth(m1->get_health());
+        }
+      }
+
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num7)) {
+        if (menuLock == 2) {
+          // Fighter.stunningStrike(enemy);
+          actionPoints -= 1;
+          _actionNum->UpdateAction(actionPoints);
+          menuBeginning = 1;
+          menuEnd = 4;
+          menuLock = 0;
+        }
+      }
+
+      // cleric menu
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) {
+        if (menuLock == 3) {
+          // Fighter.stunningStrike(enemy);
+          actionPoints -= 1;
+          _actionNum->UpdateAction(actionPoints);
+          menuBeginning = 1;
+          menuEnd = 4;
+          menuLock = 0;
+        }
+      }
+
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num9)) {
+        if (menuLock == 3) {
+          // Fighter.stunningStrike(enemy);
+          actionPoints -= 1;
+          _actionNum->UpdateAction(actionPoints);
+          menuBeginning = 1;
+          menuEnd = 4;
+          menuLock = 0;
+        }
+      }
+    }
   }
 }
 
 void EncounterState::update(float dt) {
   // general menu
   // create function to do this more descretly
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
-    if (actionPoints > 0) {
-      if (menuLock == 0) {
-        menuLock = 1;
-        menuBeginning = 5;
-        menuEnd = 6;
-      }
-    }
-  }
-
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
-    if (actionPoints > 0) {
-      if (menuLock == 0) {
-        menuLock = 2;
-        menuBeginning = 7;
-        menuEnd = 8;
-      }
-    }
-  }
-
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
-    if (actionPoints > 0) {
-      if (menuLock == 0) {
-        menuLock = 3;
-        menuBeginning = 9;
-        menuEnd = 10;
-      }
-    }
-  }
-
-  // fighter menu
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) {
-    if (menuLock == 1) {
-      // Fighter.serratedSlash(enemy);
-      actionPoints -= 1;
-      _actionNum->UpdateAction(actionPoints);
-      menuBeginning = 1;
-      menuEnd = 4;
-      menuLock = 0;
-    }
-  }
-
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5)) {
-    if (menuLock == 1) {
-      // Fighter.stunningStrike(enemy);
-      actionPoints -= 1;
-      _actionNum->UpdateAction(actionPoints);
-      menuBeginning = 1;
-      menuEnd = 4;
-      menuLock = 0;
-    }
-  }
-
-  // wizard menu
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)) {
-    if (menuLock == 2) {
-      // Fighter.stunningStrike(enemy);
-      actionPoints -= 1;
-      _actionNum->UpdateAction(actionPoints);
-      menuBeginning = 1;
-      menuEnd = 4;
-      menuLock = 0;
-    }
-  }
-
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num7)) {
-    if (menuLock == 2) {
-      // Fighter.stunningStrike(enemy);
-      actionPoints -= 1;
-      _actionNum->UpdateAction(actionPoints);
-      menuBeginning = 1;
-      menuEnd = 4;
-      menuLock = 0;
-    }
-  }
-
-  // cleric menu
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) {
-    if (menuLock == 3) {
-      // Fighter.stunningStrike(enemy);
-      actionPoints -= 1;
-      _actionNum->UpdateAction(actionPoints);
-      menuBeginning = 1;
-      menuEnd = 4;
-      menuLock = 0;
-    }
-  }
-
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num9)) {
-    if (menuLock == 3) {
-      // Fighter.stunningStrike(enemy);
-      actionPoints -= 1;
-      _actionNum->UpdateAction(actionPoints);
-      menuBeginning = 1;
-      menuEnd = 4;
-      menuLock = 0;
-    }
-  }
 
   // end round
+  /*
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)) {
     if (menuLock == 0) {
-      // round()
     }
-  }
+  }*/
 
-  /*if (roundNum > triggerNum){
-      //updates health
-      //_fighterNum->UpdateHealth(Fighter.get_health());
-      //_wizardNum->UpdateHealth(Wizard.get_health());
-      //_clericNum->UpdateHealth(Cleric.get_health());
-      //_encounterNum->UpdateHealth(Minion.get_health());
+  _encounterNum->UpdateDamage(10, " ");
+
+  /*if(!minion.Isalive()){
+    //win message
+    //display amount of gold made
+      _data->machine.AddState(StateRef(new MapState(this->_data)));
+    delete _fighterNum;
+    delete _wizardNum;
+    delete _clericNum;
+    delete _encounterNum;
+    delete _menuEncounter;
+    delete _actionNum;
   }*/
 }
 

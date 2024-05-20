@@ -12,6 +12,15 @@
 #include "NumDisplay.h"
 #include "state.h"
 
+#include "Boss.h"
+#include "Character.h"
+#include "MiniBoss.h"
+#include "Minion.h"
+#include "Wizard.h"
+#include "Cleric.h"
+#include "Fighter.h"
+#include "Game.h"
+
 namespace graphics {
 
 class EncounterState : public State {
@@ -52,6 +61,16 @@ class EncounterState : public State {
   // number refresh counter
   int triggerNum;
   // need to add a variable in the round function that says what round it is
+
+  //values for each entity
+  Minion* m1;
+  MiniBoss* m2;
+  Boss* m3;
+  Fighter* c1;
+  Wizard* c2;
+  Cleric* c3;
+
+  Game game;
 
  public:
   EncounterState(GameDataRef data);
