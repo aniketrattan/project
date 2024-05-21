@@ -6,7 +6,7 @@ int Character::actionPoints = 5;
 
 int Character::money = 0;
 
-bool Character::isProtecting  = false;
+bool Character::isProtecting = false;
 
 bool Character::isWeakening = false;
 
@@ -75,13 +75,13 @@ void Character::set_money(int money) { this->money = money; }
 
 void Character::addItem(const Items &item) { inventory.push_back(item); }
 
-bool Character::hasItem(const string& itemName) const {
-    for (const auto& item : inventory) {
-        if (item.get_name() == itemName) {
-            return true;
-        }
+bool Character::hasItem(const string &itemName) const {
+  for (const auto &item : inventory) {
+    if (item.get_name() == itemName) {
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 void Character::weakeningRay() {
@@ -100,8 +100,21 @@ void Character::protection() {
 
 bool Character::get_isProtecting() { return isProtecting; };
 
-void Character::resetProtection() {isProtecting = false;}
+void Character::resetProtection() { isProtecting = false; }
 
-void Character::setProtectionAmount(int protectionAmount) { this->protectionAmount = protectionAmount;};
+void Character::setProtectionAmount(int protectionAmount) {
+  this->protectionAmount = protectionAmount;
+};
 
 int Character::getProtectionAmount() { return protectionAmount; };
+
+void Character::anchorHowl() {
+  isAnchoring = true;
+  useActionPoints(1);
+}
+
+bool Character::get_isAnchoring() const { return isAnchoring; };
+
+void Character::resetAnchoring() {
+  isAnchoring = false;
+}

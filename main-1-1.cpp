@@ -33,17 +33,19 @@ int main() {
   game.setCleric(&c3);
   c1.set_money(100);
 
-  c3.protection();
-  cout << c1.get_isProtecting() << endl;
-  cout << c1.getProtectionAmount() << endl;
-  shop.buyItem(c3, "Holy Water");
-  m1.attack(20, c1);
+  c1.anchorHowl();
+  cout << c1.get_isAnchoring() << endl;
+  cout << c2.get_isAnchoring() << endl;
+
+  //c3.protection();
+  //cout << c1.get_isProtecting() << endl;
+  //cout << c1.getProtectionAmount() << endl;
+  //shop.buyItem(c3, "Holy Water");
+  m2.attack(20, c1, c2,c3);
 
   game.round();
 
-  cout << c1.getProtectionAmount() << endl;
-  c3.protection();
-  m1.attack(10, c2);
+  cout << c1.get_isAnchoring() << endl;
 
   cout << c1.get_health() << endl;
   cout << c2.get_health() << endl;

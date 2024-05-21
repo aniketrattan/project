@@ -21,6 +21,7 @@ protected:
   static bool isWeakening;
   static bool isProtecting;
   vector<Items> inventory;
+  bool isAnchoring;
 
 public:
   Character(int health);
@@ -43,10 +44,14 @@ public:
   void resetProtection();
   void setProtectionAmount(int protectionAmount);
   int getProtectionAmount();
+  void anchorHowl();
+  bool get_isAnchoring() const;
+  void resetAnchoring();
   int get_money(); // Get money
   void set_money(int money);
   void addItem(const Items &item);
-  bool hasItem(const string& itemName) const; // Method to check for an item in inventory
+  bool hasItem(
+      const string &itemName) const; // Method to check for an item in inventory
   void attack(int damage, Attack &object);
 };
 

@@ -65,6 +65,8 @@ void Game::round() {
 
   fighter->set_actionPoints(5);
 
+  fighter->resetAnchoring();
+
   // Change the "alive" status if character/enemy dies
   fighter->checkHealth();
   wizard->checkHealth();
