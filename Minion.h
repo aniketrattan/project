@@ -16,6 +16,7 @@ protected:
   int level;
   bool isAlive;
   int bleed;
+  int monsterCount;
 
 public:
   Minion(string name, int health, int level);

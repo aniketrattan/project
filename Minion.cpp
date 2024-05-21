@@ -62,31 +62,66 @@ void Minion::specialAttack(Character &c1, Character &c2, Character &c3) {
 void Minion::attack(int damage, Attack &object) {}
 
 void Minion::attack(int damage, Character &c1) {
-  if (c1.get_isWeakening()) {
-    c1.set_health(c1.get_health() - (damage / 2));
-  } else {
-    c1.set_health(c1.get_health() - damage);
-  }
+    if (c1.get_isWeakening()) {
+        c1.set_health(c1.get_health() - (damage / 2));
+    } else if (c1.get_isProtecting()) {
+        c1.set_health(c1.get_health() - max(0, damage - c1.getProtectionAmount()));
+        c1.resetProtection();
+    } else {
+        c1.set_health(c1.get_health() - damage);
+    }
 }
 
 void Minion::attack(int damage, Character &c1, Character &c2) {
-  if (c1.get_isWeakening() || c2.get_isWeakening()) {
-    c1.set_health(c1.get_health() - (damage / 2));
-    c2.set_health(c2.get_health() - (damage / 2));
-  } else {
-    c1.set_health(c1.get_health() - damage);
-    c2.set_health(c2.get_health() - damage);
-  }
+    if (c1.get_isWeakening() || c2.get_isWeakening()) {
+        c1.set_health(c1.get_health() - (damage / 2));
+        c2.set_health(c2.get_health() - (damage / 2));
+    } else if (c1.get_isProtecting() || c2.get_isProtecting()) {
+        if (c1.get_isProtecting()) {
+            c1.set_health(c1.get_health() - max(0, damage - c1.getProtectionAmount()));
+            c1.resetProtection();
+        } else {
+            c1.set_health(c1.get_health() - damage);
+        }
+        if (c2.get_isProtecting()) {
+            c2.set_health(c2.get_health() - max(0, damage - c2.getProtectionAmount()));
+            c2.resetProtection();
+        } else {
+            c2.set_health(c2.get_health() - damage);
+        }
+    } else {
+        c1.set_health(c1.get_health() - damage);
+        c2.set_health(c2.get_health() - damage);
+    }
 }
 
 void Minion::attack(int damage, Character &c1, Character &c2, Character &c3) {
-  if (c1.get_isWeakening() || c2.get_isWeakening() || c3.get_isWeakening()) {
-    c1.set_health(c1.get_health() - (damage / 2));
-    c2.set_health(c2.get_health() - (damage / 2));
-    c3.set_health(c3.get_health() - (damage / 2));
-  } else {
-    c1.set_health(c1.get_health() - damage);
-    c2.set_health(c2.get_health() - damage);
-    c3.set_health(c3.get_health() - damage);
-  }
+    if (c1.get_isWeakening() || c2.get_isWeakening() || c3.get_isWeakening()) {
+        c1.set_health(c1.get_health() - (damage / 2));
+        c2.set_health(c2.get_health() - (damage / 2));
+        c3.set_health(c3.get_health() - (damage / 2));
+    } else if (c1.get_isProtecting() || c2.get_isProtecting() || c3.get_isProtecting()) {
+        if (c1.get_isProtecting()) {
+            c1.set_health(c1.get_health() - max(0, damage - c1.getProtectionAmount()));
+            c1.resetProtection();
+        } else {
+            c1.set_health(c1.get_health() - damage);
+        }
+        if (c2.get_isProtecting()) {
+            c2.set_health(c2.get_health() - max(0, damage - c2.getProtectionAmount()));
+            c2.resetProtection();
+        } else {
+            c2.set_health(c2.get_health() - damage);
+        }
+        if (c3.get_isProtecting()) {
+            c3.set_health(c3.get_health() - max(0, damage - c3.getProtectionAmount()));
+            c3.resetProtection();
+        } else {
+            c3.set_health(c3.get_health() - damage);
+        }
+    } else {
+        c1.set_health(c1.get_health() - damage);
+        c2.set_health(c2.get_health() - damage);
+        c3.set_health(c3.get_health() - damage);
+    }
 }

@@ -6,6 +6,10 @@ int Character::actionPoints = 5;
 
 int Character::money = 0;
 
+bool Character::isProtecting  = false;
+
+bool Character::isWeakening = false;
+
 Character::Character(int health) {
   this->health = health;
   isAlive = true;
@@ -89,3 +93,15 @@ bool Character::get_isWeakening() { return isWeakening; };
 
 void Character::resetWeakening() { isWeakening = false; }
 
+void Character::protection() {
+  isProtecting = true;
+  useActionPoints(1);
+}
+
+bool Character::get_isProtecting() { return isProtecting; };
+
+void Character::resetProtection() {isProtecting = false;}
+
+void Character::setProtectionAmount(int protectionAmount) { this->protectionAmount = protectionAmount;};
+
+int Character::getProtectionAmount() { return protectionAmount; };

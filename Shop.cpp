@@ -5,7 +5,7 @@ Shop::Shop() {
   // Add some initial items to the shop
   inventory.push_back(Items("Reaper's Blade", 100));
   inventory.push_back(Items("Ring of Fire", 150));
-  inventory.push_back(Items("Gift of Protection", 100));
+  inventory.push_back(Items("Holy Water", 100));
 }
 
 void Shop::addItem(const Items &item) { inventory.push_back(item); }
@@ -31,4 +31,6 @@ bool Shop::buyItem(Character &character, const string &itemName) {
       }
     }
   }
+  cout << itemName << " not found in shop inventory." << endl;
+    return false;
 }

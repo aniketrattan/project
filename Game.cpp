@@ -49,6 +49,20 @@ void Game::round() {
   miniBoss->set_health(miniBoss->get_health() - miniBoss->get_bleed());
   boss->set_health(boss->get_health() - boss->get_bleed());
 
+  if (fighter->hasItem("Reaper's Blade")) {
+    fighter->equipReapersBlade();
+  }
+
+  if (wizard->hasItem("Ring of Fire")) {
+    wizard->equipRingOfFire();
+  }
+
+  if (cleric->hasItem("Holy Water")) {
+    fighter->setProtectionAmount(10);
+    wizard->setProtectionAmount(10);
+    cleric->setProtectionAmount(10);
+  }
+
   fighter->set_actionPoints(5);
 
   // Change the "alive" status if character/enemy dies

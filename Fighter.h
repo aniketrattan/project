@@ -14,7 +14,6 @@ public:
   void equipReapersBlade();
   void serratedSlash(Minion &target);
   void stunningStrike();
-    bool isProtecting = false;
 };
 
 #endif // FIGHTER_H

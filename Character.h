@@ -7,7 +7,6 @@ using namespace std;
 #include "Attack.h"
 #include "Items.h"
 #include "Minion.h"
-#include "Cleric.h"
 #include <vector>
 
 class Character : public Attack {
@@ -18,9 +17,9 @@ protected:
   int fire;
   int poison;
   static int money;
-  bool isWeakening = false;
-  int protectionAmount;
-  bool isProtecting = false;
+  int protectionAmount = 5;
+  static bool isWeakening;
+  static bool isProtecting;
   vector<Items> inventory;
 
 public:
@@ -39,6 +38,11 @@ public:
   void weakeningRay();
   bool get_isWeakening();
   void resetWeakening();
+  void protection();
+  bool get_isProtecting();
+  void resetProtection();
+  void setProtectionAmount(int protectionAmount);
+  int getProtectionAmount();
   int get_money(); // Get money
   void set_money(int money);
   void addItem(const Items &item);

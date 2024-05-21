@@ -2,8 +2,8 @@
 #define SHOP_H
 
 #include <vector>
-#include "Items.h"
 #include "Character.h"
+#include "Items.h"
 using namespace std;
 
 class Shop {
