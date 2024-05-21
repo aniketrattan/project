@@ -16,6 +16,3 @@ void Fighter::serratedSlash(Minion &target) {
   attack(damage, target);
   useActionPoints(1);
 }
-
-// stops a charge up attack
-void Fighter::stunningStrike() { useActionPoints(1); }

@@ -31,16 +31,18 @@ int main() {
   game.setFighter(&c1);
   game.setWizard(&c2);
   game.setCleric(&c3);
-  c1.set_money(100);
+  c1.set_money(200);
   c2.resetAnchoring();
 
   //m1.specialAttack(c1, c2, c3);
   m1.attack(100, c1);
+
+  shop.buyItem(c1, "Action Boost");
 
   game.round();
 
   cout << c1.get_health() << endl;
   cout << c2.get_health() << endl;
   cout << c3.get_health() << endl;
-  cout << c1.get_isAlive() << endl;
+  cout << c1.get_actionPoints() << endl;
 }

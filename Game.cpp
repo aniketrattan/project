@@ -34,6 +34,15 @@ void Game::checkEndCondition() {
 }
 
 void Game::round() {
+
+  // Change the "alive" status if character/enemy dies
+  fighter->checkHealth();
+  wizard->checkHealth();
+  cleric->checkHealth();
+  minion->checkHealth();
+  miniBoss->checkHealth();
+  boss->checkHealth();
+
   // Apply poison damage to Fighter, Wizard, and Cleric
   fighter->set_health(fighter->get_health() - fighter->get_poison());
   wizard->set_health(wizard->get_health() - wizard->get_poison());
@@ -63,17 +72,23 @@ void Game::round() {
     cleric->setProtectionAmount(10);
   }
 
-  fighter->set_actionPoints(5);
+  if (fighter->hasItem("Life Essence")) {
+    if (fighter->get_isAlive()) {
+      fighter->set_health(fighter->get_health() + 25);
+    }
+    if (wizard->get_isAlive()) {
+      wizard->set_health(wizard->get_health() + 25);
+    }
+    if (cleric->get_isAlive()) {
+      cleric->set_health(cleric->get_health() + 25);
+    }
+  }
 
-  fighter->resetAnchoring();
-
-  // Change the "alive" status if character/enemy dies
-  fighter->checkHealth();
-  wizard->checkHealth();
-  cleric->checkHealth();
-  minion->checkHealth();
-  miniBoss->checkHealth();
-  boss->checkHealth();
+  if (fighter->hasItem("Action Boost")) {
+    fighter->set_actionPoints(6);
+  } else {
+    fighter->set_actionPoints(5);
+  }
 
   // Give money when enemy is defeated
   if (!minion->get_isAlive()) {
@@ -85,7 +100,7 @@ void Game::round() {
   if (!boss->get_isAlive()) {
     fighter->set_money(fighter->get_money() + 100);
   }
-  
+
   wizard->resetWeakening();
 
   // Output the result of the round

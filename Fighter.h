@@ -13,7 +13,6 @@ public:
   Fighter(int health);
   void equipReapersBlade();
   void serratedSlash(Minion &target);
-  void stunningStrike();
 };
 
 #endif // FIGHTER_H
