@@ -1,4 +1,5 @@
 #include "MiniBoss.h"
+#include <ctime>
 
 MiniBoss::MiniBoss(string name, int health, int level)
     : Minion(name, health, level) {
@@ -27,9 +28,11 @@ void MiniBoss::specialAttack(Character &c1, Character &c2, Character &c3) {
       targets[index1]->set_poison(targets[index1]->get_poison() + 1);
       targets[index2]->set_poison(targets[index2]->get_poison() + 1);
     }
-    attack(25, c1, c2);
+    int damage = rand() % 11 + 25;
+    attack(damage, c1, c2);
 
   } else {
-    attack(25, c1, c2);
+    int damage = rand() % 11 + 25;
+    attack(damage, c1, c2);
   }
 }

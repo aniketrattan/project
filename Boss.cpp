@@ -33,9 +33,11 @@ void Boss::specialAttack(Character &c1, Character &c2, Character &c3) {
         targets[indexes[i]]->set_poison(targets[indexes[i]]->get_poison() + 2);
       }
     }
-    attack(30, c1, c2, c3);
+    int damage = rand() % 11 + 30;
+    attack(damage, c1, c2, c3);
 
   } else {
-    attack(30, c1, c2, c3);
+    int damage = rand() % 11 + 30;
+    attack(damage, c1, c2, c3);
   }
 }

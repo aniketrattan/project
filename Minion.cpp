@@ -55,7 +55,9 @@ void Minion::specialAttack(Character &c1, Character &c2, Character &c3) {
   Character *target = targets[randomIndex];
 
   // Deal damage to the chosen character
-  int damage = 20; // or any other damage value
+  int damage = rand() % 11 + 15;
+
+  attack(damage, *target);
 }
 
 void Minion::attack(int damage, Attack &object) {}
