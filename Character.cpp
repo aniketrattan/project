@@ -84,6 +84,16 @@ bool Character::hasItem(const string &itemName) const {
   return false;
 }
 
+bool Character::removeItem(const string &itemName) {
+  for (auto it = inventory.begin(); it != inventory.end(); ++it) {
+    if (it->get_name() == itemName) {
+      inventory.erase(it);
+      return true;
+    }
+  }
+  return false;
+}
+
 void Character::weakeningRay() {
   isWeakening = true;
   useActionPoints(1);
@@ -115,6 +125,4 @@ void Character::anchorHowl() {
 
 bool Character::get_isAnchoring() const { return isAnchoring; };
 
-void Character::resetAnchoring() {
-  isAnchoring = false;
-}
+void Character::resetAnchoring() { isAnchoring = false; }

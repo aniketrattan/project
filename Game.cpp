@@ -84,6 +84,21 @@ void Game::round() {
     }
   }
 
+  if (fighter->hasItem("Second Chance")) {
+    if (!fighter->get_isAlive()) {
+      fighter->set_health(50);
+      fighter->removeItem("Second Chance");
+    }
+    if (!wizard->get_isAlive()) {
+      wizard->set_health(50);
+      fighter->removeItem("Second Chance");
+    }
+    if (!cleric->get_isAlive()) {
+      cleric->set_health(50);
+      fighter->removeItem("Second Chance");
+    }
+  }
+
   if (fighter->hasItem("Action Boost")) {
     fighter->set_actionPoints(6);
   } else {

@@ -52,6 +52,7 @@ public:
   void addItem(const Items &item);
   bool hasItem(
       const string &itemName) const; // Method to check for an item in inventory
+  bool removeItem(const string &itemName);
   void attack(int damage, Attack &object);
 };
 

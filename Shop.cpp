@@ -8,6 +8,7 @@ Shop::Shop() {
   inventory.push_back(Items("Holy Water", 100));
   inventory.push_back(Items("Life Essence", 100));
   inventory.push_back(Items("Action Boost", 100));
+  inventory.push_back(Items("Second Chance", 100));
 }
 
 void Shop::addItem(const Items &item) { inventory.push_back(item); }

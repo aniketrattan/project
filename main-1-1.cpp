@@ -35,11 +35,15 @@ int main() {
   c2.resetAnchoring();
 
   //m1.specialAttack(c1, c2, c3);
-  m1.attack(100, c1);
+  m1.attack(100, c2);
 
-  shop.buyItem(c1, "Action Boost");
+  shop.buyItem(c1, "Second Chance");
 
   game.round();
+
+  cout << c2.get_health() << endl;
+
+  m1.attack(100, c2);
 
   cout << c1.get_health() << endl;
   cout << c2.get_health() << endl;
