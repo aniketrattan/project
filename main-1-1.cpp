@@ -34,18 +34,13 @@ int main() {
   c1.set_money(100);
   c2.resetAnchoring();
 
-  c1.anchorHowl();
-  cout << c1.get_isAnchoring() << endl;
-  cout << c2.get_isAnchoring() << endl;
-  cout << c3.get_isAnchoring() << endl;
-
-  m1.specialAttack(c1, c2, c3);
+  //m1.specialAttack(c1, c2, c3);
+  m1.attack(100, c1);
 
   game.round();
-
-  cout << c2.get_isAnchoring() << endl;
 
   cout << c1.get_health() << endl;
   cout << c2.get_health() << endl;
   cout << c3.get_health() << endl;
+  cout << c1.get_isAlive() << endl;
 }
