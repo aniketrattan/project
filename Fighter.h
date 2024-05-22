@@ -2,7 +2,6 @@
 #define FIGHTER_H
 
 #include "Character.h"
-#include "Minion.h"
 
 class Fighter : public Character {
 protected:

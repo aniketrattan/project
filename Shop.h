@@ -1,20 +1,29 @@
 #ifndef SHOP_H
 #define SHOP_H
 
-#include <vector>
 #include "Character.h"
 #include "Items.h"
+#include <vector>
+
 using namespace std;
 
 class Shop {
 private:
-    vector<Items> inventory;
+  // vector for storing items
+  vector<Items> inventory;
 
 public:
-    Shop();
-    void addItem(const Items& item);
-    void displayItems() const;
-    bool buyItem(Character& character, const string& itemName);
+  // default constructor
+  Shop();
+
+  // add item to inventory
+  void addItem(const Items &item);
+
+  // display inventory
+  void displayItems() const;
+
+  // add item to character inventory
+  bool buyItem(Character &character, const string &itemName);
 };
 
 #endif // SHOP_H

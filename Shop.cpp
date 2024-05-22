@@ -11,15 +11,19 @@ Shop::Shop() {
   inventory.push_back(Items("Second Chance", 100));
 }
 
+// add some items to the shop
 void Shop::addItem(const Items &item) { inventory.push_back(item); }
 
+// display the items in the shop
 void Shop::displayItems() const {
   cout << "Shop Inventory:" << endl;
   for (const auto &item : inventory) {
-    cout << "Name: " << item.get_name() << ", Cost: " << item.get_cost() << endl;
+    cout << "Name: " << item.get_name() << ", Cost: " << item.get_cost()
+         << endl;
   }
 }
 
+// add item to charcater inventory
 bool Shop::buyItem(Character &character, const string &itemName) {
   for (const auto &item : inventory) {
     if (item.get_name() == itemName) {
@@ -35,5 +39,5 @@ bool Shop::buyItem(Character &character, const string &itemName) {
     }
   }
   cout << itemName << " not found in shop inventory." << endl;
-    return false;
+  return false;
 }

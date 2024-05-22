@@ -8,16 +8,14 @@
 #include "MiniBoss.h"
 #include "Minion.h"
 #include "Wizard.h"
-
-
 #include <chrono>
-#include <ctime>
 #include <fstream>
 #include <iomanip>
-
+#include <iostream>
 
 class Game {
 private:
+  // pointers to objects of the game
   Fighter *fighter;
   Wizard *wizard;
   Cleric *cleric;
@@ -27,7 +25,10 @@ private:
   int monsterCount = 1;
 
 public:
+  // default constructor
   Game();
+
+  // setters
   void setMinion(Minion *minionPtr);
   void setMiniBoss(MiniBoss *miniBossPtr);
   void setBoss(Boss *bossPtr);
@@ -35,13 +36,12 @@ public:
   void setWizard(Wizard *wizardPtr);
   void setCleric(Cleric *clericPtr);
   void setMonsterCount(int monsterCount);
+
   int getMonsterCount();
   void checkEndCondition(); // Declaration of the checkEndCondition function
-  void saveGame();
-  void loadGame(
-      const std::string &filename); // Function to load game state from a file
-  void round();                     // Declaration of the round function
-  ~Game();                          // Destructor
+  void loadGame(const std::string &filename);
+  void round(); // Declaration of the round function
+  ~Game();      // Destructor
 };
 
 #endif // GAME_H
