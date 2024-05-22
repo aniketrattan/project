@@ -1,13 +1,13 @@
 #include "MiniBoss.h"
-#include <ctime>
 
+// constructor
 MiniBoss::MiniBoss(string name, int health, int level)
     : Minion(name, health, level) {
   srand(time(nullptr));
 };
 
+// attack
 void MiniBoss::specialAttack(Character &c1, Character &c2, Character &c3) {
-
   int chance = rand() % 100;
   if (chance < 40) { // 40% chance
     // Choose two random characters out of c1, c2, and c3
@@ -27,11 +27,13 @@ void MiniBoss::specialAttack(Character &c1, Character &c2, Character &c3) {
     } else { // Poison attack
       targets[index1]->set_poison(targets[index1]->get_poison() + 1);
       targets[index2]->set_poison(targets[index2]->get_poison() + 1);
-    }
+    } 
+    // random damage between 25 and 35
     int damage = rand() % 11 + 25;
     attack(damage, c1, c2);
 
   } else {
+    // random damage between 25 and 35
     int damage = rand() % 11 + 25;
     attack(damage, c1, c2);
   }
