@@ -19,11 +19,12 @@ class MapState : public State {
   sf::Sprite _background;
 
   MenuDisplay* _menuPaths;
+  MenuDisplay* Title;
 
   // what values will be shown from the paths vector
   int menuBeginning;
   int menuEnd;
-
+  vector<string> title = {"Choose one path"};
   vector<string> paths = { "left) campsite", "up) encounter", "right) shop"};
 
  public:

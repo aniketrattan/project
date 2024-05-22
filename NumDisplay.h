@@ -19,12 +19,14 @@ class NumDisplay {
   GameDataRef _data;
   sf::Text _health;
   sf::Text _damage;
+  int _bleed = 0;
 
  public:
   NumDisplay(GameDataRef data, sf::Sprite character);
 
   void Draw();
   void UpdateHealth(int health);
+  void UpdateHealth(int health, int bleed);
   void UpdateDamage(int damage, string type);
 
   ~NumDisplay();

@@ -12,6 +12,7 @@ void MapState::Init() {
   this->_data->assets.LoadFont("menu", GAME_FONT);
   _background.setTexture(this->_data->assets.GetTexture("Map Background"));
   _menuPaths = new MenuDisplay(_data, paths, 60, 0);
+  Title = new MenuDisplay(_data, title, 0, 0);
   menuBeginning = 1;
   menuEnd = 3;
 }
@@ -43,6 +44,7 @@ void MapState::Draw(float dt) {
   this->_data->window.draw(_background);
 
   this->_menuPaths->Draw(menuBeginning, menuEnd);
+  Title->Draw(1,1);
 
   this->_data->window.display();
 }

@@ -16,7 +16,7 @@ protected:
   int level;
   bool isAlive;
   int bleed;
-  int damage;
+  int monsterCount;
 
 public:
   Minion(string name, int health, int level);
@@ -29,6 +29,8 @@ public:
   void set_level(int level);
   bool get_isAlive();
   void checkHealth();
+  void specialAttack(Character &c1, Character &c2, Character &c3);
+  void attack(int damage, Character &c1);
   void attack(int damage, Attack &object);
   void attack(int damage, Character &c1, Character &c2);
   void attack(int damage, Character &c1, Character &c2, Character &c3);

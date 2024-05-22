@@ -1,6 +1,9 @@
 #include "Minion.h"
 
 #include <string>
+
+#include <cstdlib>
+#include <ctime>
 using namespace std;
 
 Minion::Minion(string name, int health, int level) {
@@ -42,26 +45,94 @@ void Minion::checkHealth() {
   }
 }
 
-void Minion::attack(int damage, Attack &object) {
-  int initialHealth = object.get_health();
-  int newHealth = initialHealth - damage;
-  if (health < 0) {
-    health = 0;
+void Minion::specialAttack(Character &c1, Character &c2, Character &c3) {
+  // Seed the random number generator
+  srand(static_cast<unsigned int>(time(0)));
+
+  // Choose a random character
+  int randomIndex = rand() % 3;
+  Character *targets[3] = {&c1, &c2, &c3};
+  Character *target = targets[randomIndex];
+
+  // Deal damage to the chosen character
+  int damage = rand() % 11 + 15;
+
+  attack(damage, *target);
+}
+
+void Minion::attack(int damage, Attack &object) {}
+
+void Minion::attack(int damage, Character &c1) {
+
+  if (c1.get_isWeakening()) {
+    c1.set_health(c1.get_health() - (damage / 2));
+  } else if (c1.get_isProtecting()) {
+    c1.set_health(c1.get_health() - max(0, damage - c1.getProtectionAmount()));
+    c1.resetProtection();
+  } else {
+    c1.set_health(c1.get_health() - damage);
   }
-  object.set_health(newHealth);
 }
 
 void Minion::attack(int damage, Character &c1, Character &c2) {
-  if (!c1.get_isBlocking() || !c2.get_isBlocking()) {
-  c1.set_health(c1.get_health() - damage);
-  c2.set_health(c2.get_health() - damage);
+
+  if (c1.get_isWeakening() || c2.get_isWeakening()) {
+    c1.set_health(c1.get_health() - (damage / 2));
+    c2.set_health(c2.get_health() - (damage / 2));
+
+  } else if (c1.get_isProtecting() || c2.get_isProtecting()) {
+    c1.set_health(c1.get_health() - max(0, damage - c1.getProtectionAmount()));
+    c2.set_health(c2.get_health() - max(0, damage - c2.getProtectionAmount()));
+    c1.resetProtection();
+
+  } else if (c1.get_isAnchoring() || c2.get_isAnchoring()) {
+
+    if (c1.get_isAnchoring()) {
+      c1.set_health(c1.get_health() - (damage * 2));
+      c1.resetAnchoring();
+    } else if (c2.get_isAnchoring()) {
+      c2.set_health(c2.get_health() - (damage * 2));
+      c2.resetAnchoring();
+    }
+
+  } else {
+    c1.set_health(c1.get_health() - damage);
+    c2.set_health(c2.get_health() - damage);
   }
 }
 
 void Minion::attack(int damage, Character &c1, Character &c2, Character &c3) {
-  if (!c1.get_isBlocking() || !c2.get_isBlocking() || !c3.get_isBlocking()) {
-  c1.set_health(c1.get_health() - damage);
-  c2.set_health(c2.get_health() - damage);
-  c3.set_health(c3.get_health() - damage);
+
+  if (c1.get_isWeakening() || c2.get_isWeakening() || c3.get_isWeakening()) {
+    c1.set_health(c1.get_health() - (damage / 2));
+    c2.set_health(c2.get_health() - (damage / 2));
+    c3.set_health(c3.get_health() - (damage / 2));
+
+  } else if (c1.get_isProtecting() || c2.get_isProtecting() ||
+             c3.get_isProtecting()) {
+    c1.set_health(c1.get_health() - max(0, damage - c1.getProtectionAmount()));
+    c2.set_health(c2.get_health() - max(0, damage - c2.getProtectionAmount()));
+    c3.set_health(c3.get_health() - max(0, damage - c3.getProtectionAmount()));
+    c1.resetProtection();
+
+  } else if (c1.get_isAnchoring() || c2.get_isAnchoring() ||
+             c3.get_isAnchoring()) {
+
+    if (c1.get_isAnchoring()) {
+      c1.set_health(c1.get_health() - (damage * 3));
+      c1.resetAnchoring();
+    } else if (c2.get_isAnchoring()) {
+      c2.set_health(c2.get_health() - (damage * 3));
+      c2.resetAnchoring();
+    } else if (c3.get_isAnchoring()) {
+      c3.set_health(c3.get_health() - (damage * 3));
+    }
+
+  }
+
+  else {
+    c1.set_health(c1.get_health() - damage);
+    c2.set_health(c2.get_health() - damage);
+    c3.set_health(c3.get_health() - damage);
   }
 }

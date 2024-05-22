@@ -3,8 +3,6 @@
 
 #include "Minion.h"
 #include "Character.h"
-#include <cstdlib> // For rand() and srand()
-#include <ctime>   // For time()
 
 class MiniBoss : public Minion {
     public:
