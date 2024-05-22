@@ -2,7 +2,6 @@
 #define MINIBOSS_H
 
 #include "Minion.h"
-#include "Character.h"
 
 class MiniBoss : public Minion {
     public:
