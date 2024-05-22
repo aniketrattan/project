@@ -22,6 +22,7 @@ private:
   Minion *minion;
   MiniBoss *miniBoss;
   Boss *boss;
+  int monsterCount  = 1;
 
 public:
   Game();
@@ -31,6 +32,8 @@ public:
   void setFighter(Fighter *fighterPtr);
   void setWizard(Wizard *wizardPtr);
   void setCleric(Cleric *clericPtr);
+  void setMonsterCount (int monsterCount);
+  int getMonsterCount() { return monsterCount; }
   void checkEndCondition(); // Declaration of the checkEndCondition function
   void saveGame();
   void loadGame(

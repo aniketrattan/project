@@ -17,6 +17,10 @@ void Game::setWizard(Wizard *wizardPtr) { wizard = wizardPtr; }
 
 void Game::setCleric(Cleric *clericPtr) { cleric = clericPtr; }
 
+void Game::setMonsterCount(int count) { monsterCount = count; }
+
+int Game::getMonsterCount() { return monsterCount; }
+
 void Game::checkEndCondition() {
   if (wizard && wizard->get_isAlive()) {
     return; // Wizard is still alive
@@ -32,6 +36,7 @@ void Game::checkEndCondition() {
 
   std::cout << "Game over" << std::endl;
 }
+
 
 void Game::round() {
 
@@ -117,6 +122,12 @@ void Game::round() {
   }
 
   wizard->resetWeakening();
+
+ if (!minion->get_isAlive()) {
+  setMonsterCount(2);
+ } if (!miniBoss->get_isAlive()) {
+    setMonsterCount(3);
+ }
 
   // Output the result of the round
   std::cout << "Round ended." << std::endl;

@@ -8,7 +8,7 @@ MiniBoss::MiniBoss(string name, int health, int level)
 
 // attack
 void MiniBoss::specialAttack(Character &c1, Character &c2, Character &c3) {
-  // Generate a random number between 0 and 99
+  // Generate a random number between 0 and 99 
   int chance = rand() % 100;
   if (chance < 40) { // 40% chance
     // Choose two random characters out of c1, c2, and c3
