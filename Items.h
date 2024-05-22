@@ -2,7 +2,6 @@
 #define ITEMS_H
 
 #include <string>
-#include "Character.h"
 using namespace std;
 
 class Items {
