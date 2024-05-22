@@ -10,8 +10,13 @@ protected:
   int bleedAmount = 1;
 
 public:
+  // constructor
   Fighter(int health);
+
+  // equip item
   void equipReapersBlade();
+
+  // attack
   void serratedSlash(Minion &target);
 };
 

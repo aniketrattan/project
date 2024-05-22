@@ -1,18 +1,20 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "Boss.h"
 #include "Character.h"
 #include "Cleric.h"
 #include "Fighter.h"
-#include "Wizard.h"
-#include "Minion.h"
 #include "MiniBoss.h"
-#include "Boss.h"
+#include "Minion.h"
+#include "Wizard.h"
 
-#include <fstream>
+
 #include <chrono>
 #include <ctime>
+#include <fstream>
 #include <iomanip>
+
 
 class Game {
 private:
@@ -22,7 +24,7 @@ private:
   Minion *minion;
   MiniBoss *miniBoss;
   Boss *boss;
-  int monsterCount  = 1;
+  int monsterCount = 1;
 
 public:
   Game();
@@ -32,8 +34,8 @@ public:
   void setFighter(Fighter *fighterPtr);
   void setWizard(Wizard *wizardPtr);
   void setCleric(Cleric *clericPtr);
-  void setMonsterCount (int monsterCount);
-  int getMonsterCount() { return monsterCount; }
+  void setMonsterCount(int monsterCount);
+  int getMonsterCount();
   void checkEndCondition(); // Declaration of the checkEndCondition function
   void saveGame();
   void loadGame(
