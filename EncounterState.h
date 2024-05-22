@@ -5,6 +5,7 @@
 #include <iostream>
 #include <sstream>
 
+#include "save.h"
 #include "ActionPoints.h"
 #include "Boss.h"
 #include "Character.h"
@@ -23,7 +24,7 @@
 
 namespace graphics {
 
-class EncounterState : public State {
+class EncounterState : public State, public save {
  private:
   GameDataRef _data;
   // sprites
@@ -74,7 +75,7 @@ class EncounterState : public State {
       "deals damage to the \nmonster and makes them bleed",
       "all attacks will hit the fighter",
       "charges up a massive attack \nthat lands on the next turn",
-      "cuts the incomming attack by half",
+      "weakens monster attack",
       "midigates some of \nthe incoming damage",
       "heals all characters \nof any ongoing ailments",
   };
@@ -84,17 +85,16 @@ class EncounterState : public State {
 
   // values for each entity
   Minion* m1;
-  Minion* m2;
-  Minion* m3;
-  MiniBoss* m4;
-  Boss* m5;
+  MiniBoss* mb1;
+  Boss* b1;
   Fighter* c1;
   Wizard* c2;
   Cleric* c3;
 
   Game game;
+
   //tells what monster we're on
-  int monsterCount = 0;
+  int monsterCount = get_monstercount();
 
  public:
   EncounterState(GameDataRef data);

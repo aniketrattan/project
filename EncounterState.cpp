@@ -16,28 +16,17 @@ EncounterState::EncounterState(GameDataRef data) : _data(data) {}
 
 // initialize function
 void EncounterState::Init() {
-  
+
   m1 = new Minion("Minion", 100, 1);
-  m2 = new Minion("Minion2", 150, 1);
-  m3 = new Minion("Minion3", 200, 1);
-  m4 = new MiniBoss("MiniBoss", 250, 2);
-  m5 = new Boss("Boss", 500, 3);
+  mb1 = new MiniBoss("MiniBoss", 250, 2);
+  b1 = new Boss("Boss", 500, 3);
   c1 = new Fighter(100);
   c2 = new Wizard(100);
   c3 = new Cleric(100);
-  
 
-  // make values for entites
-  if (monsterCount == 0) {
-    game.setMinion(m1);
-  } else if (monsterCount == 1) {
-    game.setMinion(m2);
-  } else if (monsterCount == 3) {
-    game.setMinion(m3);
-  }
-
-  game.setMiniBoss(m4);
-  game.setBoss(m5);
+  game.setMinion(m1);
+  game.setMiniBoss(mb1);
+  game.setBoss(b1);
   game.setFighter(c1);
   game.setWizard(c2);
   game.setCleric(c3);
@@ -51,7 +40,7 @@ void EncounterState::Init() {
   _data->assets.LoadTexture("Cleric", CLERIC_SPRITE_FILEPATH);
 
   // load monster sprite
-  if (monsterCount == 5) {
+  if (monsterCount == 3) {
     _data->assets.LoadTexture("Encounter", BOSS_SPRITE_FILEPATH);
   } else if (monsterCount == 2) {
     _data->assets.LoadTexture("Encounter", MINIBOSS_SPRITE_FILEPATH);
@@ -83,7 +72,7 @@ void EncounterState::Init() {
   _cleric.setPosition((571 / 4) - (_cleric.getGlobalBounds().width / 2),
                       _cleric.getGlobalBounds().height / 2 + 140);
 
-  if (monsterCount == 5) {
+  if (monsterCount == 3) {
     _encounter.setPosition((4 * SCREEN_WIDTH / 7),
                            _encounter.getGlobalBounds().height / 2 - 110);
   } else if (monsterCount == 2) {
@@ -116,7 +105,14 @@ void EncounterState::Init() {
   _fighterNum->UpdateHealth(c1->get_health());
   _wizardNum->UpdateHealth(c2->get_health());
   _clericNum->UpdateHealth(c3->get_health());
-  _encounterNum->UpdateHealth(m5->get_health());
+
+  if (monsterCount == 3) {
+    _encounterNum->UpdateHealth(b1->get_health());
+  } else if (monsterCount == 2) {
+    _encounterNum->UpdateHealth(mb1->get_health());
+  } else {
+    _encounterNum->UpdateHealth(m1->get_health());
+  }
 }
 
 void EncounterState::handleInput() {
@@ -130,10 +126,10 @@ void EncounterState::handleInput() {
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)) {
         game.round();
         // monster attack
-        if (monsterCount == 5) {
-          m5->specialAttack(c1[0], c2[0], c3[0]);
+        if (monsterCount == 3) {
+          b1->specialAttack(c1[0], c2[0], c3[0]);
         } else if (monsterCount == 2) {
-          m4->specialAttack(c1[0], c2[0], c3[0]);
+          mb1->specialAttack(c1[0], c2[0], c3[0]);
         } else {
           m1->specialAttack(c1[0], c2[0], c3[0]);
         }
@@ -143,7 +139,13 @@ void EncounterState::handleInput() {
         _fighterNum->UpdateHealth(c1->get_health());
         _wizardNum->UpdateHealth(c2->get_health());
         _clericNum->UpdateHealth(c3->get_health());
-        _encounterNum->UpdateHealth(m5->get_health(), 0);
+        if (monsterCount == 3) {
+          _encounterNum->UpdateHealth(b1->get_health());
+        } else if (monsterCount == 2) {
+          _encounterNum->UpdateHealth(mb1->get_health());
+        } else {
+          _encounterNum->UpdateHealth(m1->get_health());
+        }
       }
 
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
@@ -191,20 +193,25 @@ void EncounterState::handleInput() {
       // fighter menu
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) {
         if (menuLock == 1) {
-          if (monsterCount == 5) {
-            c1->serratedSlash(m5[0]);
+          if (monsterCount == 3) {
+            c1->serratedSlash(b1[0]);
           } else if (monsterCount == 2) {
-            c1->serratedSlash(m4[0]);
+            c1->serratedSlash(mb1[0]);
           } else {
             c1->serratedSlash(m1[0]);
           }
-
           actionPoints -= 1;
           _actionNum->UpdateAction(actionPoints);
           menuBeginning = 1;
           menuEnd = 4;
           menuLock = 0;
-          _encounterNum->UpdateHealth(m5->get_health(), 1);
+          if (monsterCount == 3) {
+            _encounterNum->UpdateHealth(b1->get_health(), 1);
+          } else if (monsterCount == 2) {
+            _encounterNum->UpdateHealth(mb1->get_health(), 1);
+          } else {
+            _encounterNum->UpdateHealth(m1->get_health(), 1);
+          }
           backOn = 0;
         }
       }
@@ -224,10 +231,10 @@ void EncounterState::handleInput() {
       // wizard menu
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)) {
         if (menuLock == 2) {
-          if (monsterCount == 5) {
-            c2->fireball(m5[0]);
+          if (monsterCount == 3) {
+            c2->fireball(b1[0]);
           } else if (monsterCount == 2) {
-            c2->fireball(m4[0]);
+            c2->fireball(mb1[0]);
           } else {
             c2->fireball(m1[0]);
           }
@@ -236,7 +243,13 @@ void EncounterState::handleInput() {
           menuBeginning = 1;
           menuEnd = 4;
           menuLock = 0;
-          _encounterNum->UpdateHealth(m4->get_health(), 0);
+          if (monsterCount == 3) {
+            _encounterNum->UpdateHealth(b1->get_health(), 0);
+          } else if (monsterCount == 2) {
+            _encounterNum->UpdateHealth(mb1->get_health(), 0);
+          } else {
+            _encounterNum->UpdateHealth(m1->get_health(), 0);
+          }
           backOn = 0;
         }
       }
@@ -300,22 +313,42 @@ void EncounterState::update(float dt) {
     }
   }*/
   // updates the encounter damage
-  _encounterNum->UpdateDamage(10, "Fire");
+
+  m1->checkHealth();
+  mb1->checkHealth();
+  b1->checkHealth();
 
   // runs if minion is dead
-  if (!m5->get_isAlive()) {
-    // win message
-    // display amount of gold made
-    // transports to map
-    _data->machine.AddState(StateRef(new MapState(this->_data)));
-    /*
-  delete _fighterNum;
-  delete _wizardNum;
-  delete _clericNum;
-  delete _encounterNum;
-  delete _menuEncounter;
-  delete _actionNum;
-  */
+  if (monsterCount == 3) {
+    if (!b1->get_isAlive()) {
+      // win message
+      // display amount of gold made
+      // transports to map
+      game.round();
+      set_monstercount(game.getMonsterCount());
+      std::cout << game.getMonsterCount() << endl;
+      _data->machine.AddState(StateRef(new MapState(this->_data)));
+    }
+  } else if (monsterCount == 2) {
+    if (!mb1->get_isAlive()) {
+      // win message
+      // display amount of gold made
+      // transports to map
+      game.round();
+      set_monstercount(game.getMonsterCount());
+      std::cout << game.getMonsterCount() << endl;
+      _data->machine.AddState(StateRef(new MapState(this->_data)));
+    }
+  } else {
+    if (!m1->get_isAlive()) {
+      // win message
+      // display amount of gold made
+      // transports to map
+      game.round();
+      set_monstercount(game.getMonsterCount());
+      std::cout << game.getMonsterCount() << endl;
+      _data->machine.AddState(StateRef(new MapState(this->_data)));
+    }
   }
 }
 
