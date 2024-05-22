@@ -16,6 +16,32 @@ EncounterState::EncounterState(GameDataRef data) : _data(data) {}
 
 // initialize function
 void EncounterState::Init() {
+  
+  m1 = new Minion("Minion", 100, 1);
+  m2 = new Minion("Minion2", 150, 1);
+  m3 = new Minion("Minion3", 200, 1);
+  m4 = new MiniBoss("MiniBoss", 250, 2);
+  m5 = new Boss("Boss", 500, 3);
+  c1 = new Fighter(100);
+  c2 = new Wizard(100);
+  c3 = new Cleric(100);
+  
+
+  // make values for entites
+  if (monsterCount == 0) {
+    game.setMinion(m1);
+  } else if (monsterCount == 1) {
+    game.setMinion(m2);
+  } else if (monsterCount == 3) {
+    game.setMinion(m3);
+  }
+
+  game.setMiniBoss(m4);
+  game.setBoss(m5);
+  game.setFighter(c1);
+  game.setWizard(c2);
+  game.setCleric(c3);
+
   // load background
   _data->assets.LoadTexture("Encounter Background",
                             ENCOUNTER_BACKGROUND_FILEPATH);
@@ -23,8 +49,16 @@ void EncounterState::Init() {
   _data->assets.LoadTexture("Fighter", FIGHTER_SPRITE_FILEPATH);
   _data->assets.LoadTexture("Wizard", WIZARD_SPRITE_FILEPATH);
   _data->assets.LoadTexture("Cleric", CLERIC_SPRITE_FILEPATH);
+
   // load monster sprite
-  _data->assets.LoadTexture("Encounter", SLIME_SPRITE_FILEPATH);
+  if (monsterCount == 5) {
+    _data->assets.LoadTexture("Encounter", BOSS_SPRITE_FILEPATH);
+  } else if (monsterCount == 2) {
+    _data->assets.LoadTexture("Encounter", MINIBOSS_SPRITE_FILEPATH);
+  } else {
+    _data->assets.LoadTexture("Encounter", MINION_SPRITE_FILEPATH);
+  }
+
   // load menu text
   _data->assets.LoadFont("menu", GAME_FONT);
 
@@ -48,43 +82,41 @@ void EncounterState::Init() {
                       _wizard.getGlobalBounds().height / 2 + 140);
   _cleric.setPosition((571 / 4) - (_cleric.getGlobalBounds().width / 2),
                       _cleric.getGlobalBounds().height / 2 + 140);
-  _encounter.setPosition((5 * 571 / 4),
-                         _encounter.getGlobalBounds().height / 2 + 130);
+
+  if (monsterCount == 5) {
+    _encounter.setPosition((4 * SCREEN_WIDTH / 7),
+                           _encounter.getGlobalBounds().height / 2 - 110);
+  } else if (monsterCount == 2) {
+    _encounter.setPosition((5 * 571 / 4),
+                           _encounter.getGlobalBounds().height / 2);
+  } else {
+    _encounter.setPosition((5 * 571 / 4),
+                           _encounter.getGlobalBounds().height / 2 + 130);
+  }
 
   // setting up NumDisplay for each sprite
-
   _fighterNum = new NumDisplay(_data, _fighter);
   _wizardNum = new NumDisplay(_data, _wizard);
   _clericNum = new NumDisplay(_data, _cleric);
   _encounterNum = new NumDisplay(_data, _encounter);
+
   // menu
   _menuEncounter = new MenuDisplay(_data, menus, 60, 0);
+  _backspace = new MenuDisplay(_data, backspace, 120, 0);
+  _menuDescription = new DescriptionDisplay(_data, descriptions,
+                                            _menuEncounter->Get_Text(), 50, 50);
+
   // what values will be shown from the menus vector
   menuBeginning = 1;
   menuEnd = 4;
   // action point
   _actionNum = new ActionPoints(_data);
 
-  // make values for entites
-  m1 = new Minion("Minion", 100, 1);
-  m2 = new MiniBoss("MiniBoss", 250, 2);
-  m3 = new Boss("Boss", 500, 3);
-  c1 = new Fighter(100);
-  c2 = new Wizard(100);
-  c3 = new Cleric(100);
-
-  game.setMinion(m1);
-  game.setMiniBoss(m2);
-  game.setBoss(m3);
-  game.setFighter(c1);
-  game.setWizard(c2);
-  game.setCleric(c3);
-
   // round() calls round function
   _fighterNum->UpdateHealth(c1->get_health());
   _wizardNum->UpdateHealth(c2->get_health());
   _clericNum->UpdateHealth(c3->get_health());
-  _encounterNum->UpdateHealth(m1->get_health());
+  _encounterNum->UpdateHealth(m5->get_health());
 }
 
 void EncounterState::handleInput() {
@@ -96,22 +128,34 @@ void EncounterState::handleInput() {
     }
     if (event.type == (sf::Event::KeyPressed)) {
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)) {
-        m1->attack(10, c1[0]);
         game.round();
+        // monster attack
+        if (monsterCount == 5) {
+          m5->specialAttack(c1[0], c2[0], c3[0]);
+        } else if (monsterCount == 2) {
+          m4->specialAttack(c1[0], c2[0], c3[0]);
+        } else {
+          m1->specialAttack(c1[0], c2[0], c3[0]);
+        }
         actionPoints = 2;
         _actionNum->UpdateAction(actionPoints);
         // updates health
         _fighterNum->UpdateHealth(c1->get_health());
         _wizardNum->UpdateHealth(c2->get_health());
         _clericNum->UpdateHealth(c3->get_health());
-        _encounterNum->UpdateHealth(m1->get_health());
+        _encounterNum->UpdateHealth(m5->get_health(), 0);
       }
+
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
         if (actionPoints > 0) {
           if (menuLock == 0) {
+            // locks menu to fighter
             menuLock = 1;
+            // tells which string values are to be drawn
             menuBeginning = 5;
             menuEnd = 6;
+            // draws backspace
+            backOn = 2;
           }
         }
       }
@@ -119,9 +163,13 @@ void EncounterState::handleInput() {
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
         if (actionPoints > 0) {
           if (menuLock == 0) {
+            // locks menu to wizard
             menuLock = 2;
+            // tells which string values are to be drawn
             menuBeginning = 7;
             menuEnd = 8;
+            // draws backspace
+            backOn = 2;
           }
         }
       }
@@ -129,9 +177,13 @@ void EncounterState::handleInput() {
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
         if (actionPoints > 0) {
           if (menuLock == 0) {
+            // locks menu to cleric
             menuLock = 3;
+            // tells which string values are to be drawn
             menuBeginning = 9;
             menuEnd = 10;
+            // draws backspace
+            backOn = 2;
           }
         }
       }
@@ -139,72 +191,98 @@ void EncounterState::handleInput() {
       // fighter menu
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4)) {
         if (menuLock == 1) {
-          c1->serratedSlash(m1[0]);
+          if (monsterCount == 5) {
+            c1->serratedSlash(m5[0]);
+          } else if (monsterCount == 2) {
+            c1->serratedSlash(m4[0]);
+          } else {
+            c1->serratedSlash(m1[0]);
+          }
+
           actionPoints -= 1;
           _actionNum->UpdateAction(actionPoints);
           menuBeginning = 1;
           menuEnd = 4;
           menuLock = 0;
-          _encounterNum->UpdateHealth(m1->get_health());
+          _encounterNum->UpdateHealth(m5->get_health(), 1);
+          backOn = 0;
         }
       }
 
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5)) {
         if (menuLock == 1) {
-          // make new attack anchor howl which redirects all attacks to the fighter.
+          c1->anchorHowl();
           actionPoints -= 1;
           _actionNum->UpdateAction(actionPoints);
           menuBeginning = 1;
           menuEnd = 4;
           menuLock = 0;
-          _encounterNum->UpdateHealth(m1->get_health());
+          backOn = 0;
         }
       }
 
       // wizard menu
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num6)) {
         if (menuLock == 2) {
-          // Fighter.stunningStrike(enemy);
+          if (monsterCount == 5) {
+            c2->fireball(m5[0]);
+          } else if (monsterCount == 2) {
+            c2->fireball(m4[0]);
+          } else {
+            c2->fireball(m1[0]);
+          }
           actionPoints -= 1;
           _actionNum->UpdateAction(actionPoints);
           menuBeginning = 1;
           menuEnd = 4;
           menuLock = 0;
-          _encounterNum->UpdateHealth(m1->get_health());
+          _encounterNum->UpdateHealth(m4->get_health(), 0);
+          backOn = 0;
         }
       }
 
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num7)) {
         if (menuLock == 2) {
-          // Fighter.stunningStrike(enemy);
+          c2->weakeningRay();
           actionPoints -= 1;
           _actionNum->UpdateAction(actionPoints);
           menuBeginning = 1;
           menuEnd = 4;
           menuLock = 0;
+          backOn = 0;
         }
       }
 
       // cleric menu
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num8)) {
         if (menuLock == 3) {
-          // Fighter.stunningStrike(enemy);
+          c3->protection();
           actionPoints -= 1;
           _actionNum->UpdateAction(actionPoints);
           menuBeginning = 1;
           menuEnd = 4;
           menuLock = 0;
+          backOn = 0;
         }
       }
 
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num9)) {
         if (menuLock == 3) {
-          // Fighter.stunningStrike(enemy);
+          c3->cleanse(c1[0], c2[0]);
           actionPoints -= 1;
           _actionNum->UpdateAction(actionPoints);
           menuBeginning = 1;
           menuEnd = 4;
           menuLock = 0;
+          backOn = 0;
+        }
+      }
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::BackSpace)) {
+        if (menuLock > 0) {
+          menuBeginning = 1;
+          menuEnd = 4;
+          menuLock = 0;
+          backOn = 0;
         }
       }
     }
@@ -221,20 +299,24 @@ void EncounterState::update(float dt) {
     if (menuLock == 0) {
     }
   }*/
+  // updates the encounter damage
+  _encounterNum->UpdateDamage(10, "Fire");
 
-  _encounterNum->UpdateDamage(10, " ");
-
-  /*if(!minion.Isalive()){
-    //win message
-    //display amount of gold made
-      _data->machine.AddState(StateRef(new MapState(this->_data)));
-    delete _fighterNum;
-    delete _wizardNum;
-    delete _clericNum;
-    delete _encounterNum;
-    delete _menuEncounter;
-    delete _actionNum;
-  }*/
+  // runs if minion is dead
+  if (!m5->get_isAlive()) {
+    // win message
+    // display amount of gold made
+    // transports to map
+    _data->machine.AddState(StateRef(new MapState(this->_data)));
+    /*
+  delete _fighterNum;
+  delete _wizardNum;
+  delete _clericNum;
+  delete _encounterNum;
+  delete _menuEncounter;
+  delete _actionNum;
+  */
+  }
 }
 
 void EncounterState::Draw(float dt) {
@@ -253,6 +335,8 @@ void EncounterState::Draw(float dt) {
   _clericNum->Draw();
   _encounterNum->Draw();
   _menuEncounter->Draw(menuBeginning, menuEnd);
+  _menuDescription->Draw(menuBeginning, menuEnd);
+  _backspace->Draw(1, backOn);
 
   // draw action points
   _actionNum->Draw();
