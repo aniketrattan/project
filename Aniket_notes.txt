@@ -9,3 +9,20 @@ General items:
 Life essence: increase max health of all characters 
 Action boost: adds 1 more action point per round
 Second chance: when a character would drop to 0 health they instead go to 50% of their max. This item can only be used once.
+
+run command:
+g++ main.cpp AssetManager.cpp EncounterState.cpp GameGraphic.cpp StateMachine.cpp NumDisplay.cpp MenuDisplay.cpp ActionPoints.cpp MapState.cpp CampsiteState.cpp ShopState.cpp Character.cpp Fighter.cpp Wizard.cpp Cleric.cpp Minion.cpp MiniBoss.cpp Boss.cpp Game.cpp DescriptionDisplay.cpp ShopUpper.cpp Items.cpp Shop.cpp -o prog -lsfml-graphics -lsfml-window -lsfml-system
+
+error:
+In file included from Items.h:5,
+                 from Items.cpp:1:
+Character.h:24:10: error: ‘Items’ was not declared in this scope
+   24 |   vector<Items> inventory;
+      |          ^~~~~
+Character.h:24:15: error: template argument 1 is invalid
+   24 |   vector<Items> inventory;
+      |               ^
+Character.h:24:15: error: template argument 2 is invalid
+Character.h:53:22: error: ‘Items’ does not name a type
+   53 |   void addItem(const Items &item);
+      |                      ^~~~~
