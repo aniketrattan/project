@@ -6,9 +6,6 @@ Boss::Boss(string name, int health, int level) : Minion(name, health, level) {
 
 void Boss::specialAttack(Character &c1, Character &c2, Character &c3) {
 
-  // Regular attack
-  attack(40, c1, c2);
-
   // Generate a random number between 0 and 99
   int chance = rand() % 100;
   if (chance < 75) { // 75% chance
@@ -36,7 +33,11 @@ void Boss::specialAttack(Character &c1, Character &c2, Character &c3) {
         targets[indexes[i]]->set_poison(targets[indexes[i]]->get_poison() + 2);
       }
     }
+    int damage = rand() % 11 + 30;
+    attack(damage, c1, c2, c3);
+
   } else {
-    attack(30, c1, c2, c3);
+    int damage = rand() % 11 + 30;
+    attack(damage, c1, c2, c3);
   }
 }

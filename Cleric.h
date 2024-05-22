@@ -6,9 +6,11 @@
 #include "Wizard.h"
 
 class Cleric : public Character {
+  protected:
+  bool hasHolyWater = false;
 public:
   Cleric(int health);
-  void protection();
+  void equipHolyWater();
   void cleanse(Fighter &fighter, Wizard &wizard);
 };
 

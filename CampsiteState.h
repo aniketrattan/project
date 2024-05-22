@@ -9,6 +9,7 @@
 #include "GameGraphic.h"
 #include "MenuDisplay.h"
 #include "state.h"
+#include "EncounterState.h"
 
 namespace graphics {
 
@@ -24,7 +25,7 @@ class CampsiteState : public State {
   int menuBeginning;
   int menuEnd;
 
-  vector<string> paths = {"All members of the party have been healed.", "To save progress press Enter.", "Progress Saved."};
+  vector<string> paths = {"All members of the party have been healed.", "To save progress press Enter.", "Progress Saved.", "up) To Encounter"};
 
  public:
   CampsiteState(GameDataRef data);
