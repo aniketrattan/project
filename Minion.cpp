@@ -1,11 +1,6 @@
 #include "Minion.h"
 
-#include <string>
-
-#include <cstdlib>
-#include <ctime>
-using namespace std;
-
+// Constructor definition
 Minion::Minion(string name, int health, int level) {
   this->name = name;
   this->health = health;
@@ -14,20 +9,16 @@ Minion::Minion(string name, int health, int level) {
   bleed = 0;
 }
 
+// getters definitions
 string Minion::get_name() { return name; }
-
 int Minion::get_health() { return health; }
-
 int Minion::get_level() { return level; }
-
-void Minion::set_level(int level) { this->level = level; }
-
 int Minion::get_bleed() { return bleed; }
-
-void Minion::set_bleed(int bleed) { this->bleed = bleed; }
-
 bool Minion::get_isAlive() { return isAlive; }
 
+// setters definitions
+void Minion::set_level(int level) { this->level = level; }
+void Minion::set_bleed(int bleed) { this->bleed = bleed; }
 void Minion::set_health(int health) {
   if (health > 0) {
     this->health = health;
@@ -36,6 +27,7 @@ void Minion::set_health(int health) {
   }
 }
 
+// updating is alive status if health goes to zero
 void Minion::checkHealth() {
   if (health <= 0) {
     health = 0;
@@ -45,6 +37,7 @@ void Minion::checkHealth() {
   }
 }
 
+// Defintions for attacks
 void Minion::specialAttack(Character &c1, Character &c2, Character &c3) {
   // Seed the random number generator
   srand(static_cast<unsigned int>(time(0)));
@@ -60,15 +53,22 @@ void Minion::specialAttack(Character &c1, Character &c2, Character &c3) {
   attack(damage, *target);
 }
 
+// initialization of pure virtual function
 void Minion::attack(int damage, Attack &object) {}
 
+// different attack functions
 void Minion::attack(int damage, Character &c1) {
 
+  // if weakening buff is active, reduce the damage done by minion
   if (c1.get_isWeakening()) {
     c1.set_health(c1.get_health() - (damage / 2));
+
+    // if protection buff is active, reduce the damage done by minion
   } else if (c1.get_isProtecting()) {
     c1.set_health(c1.get_health() - max(0, damage - c1.getProtectionAmount()));
     c1.resetProtection();
+
+    // if no buffs/debuffs are present, do simple damage
   } else {
     c1.set_health(c1.get_health() - damage);
   }
@@ -76,17 +76,19 @@ void Minion::attack(int damage, Character &c1) {
 
 void Minion::attack(int damage, Character &c1, Character &c2) {
 
+  // if weakening buff is active, reduce the damage done by minion
   if (c1.get_isWeakening() || c2.get_isWeakening()) {
     c1.set_health(c1.get_health() - (damage / 2));
     c2.set_health(c2.get_health() - (damage / 2));
 
+    // if protection buff is active, reduce the damage done by minion
   } else if (c1.get_isProtecting() || c2.get_isProtecting()) {
     c1.set_health(c1.get_health() - max(0, damage - c1.getProtectionAmount()));
     c2.set_health(c2.get_health() - max(0, damage - c2.getProtectionAmount()));
     c1.resetProtection();
 
+    // if anchoring buff is active, redirect damage to one character
   } else if (c1.get_isAnchoring() || c2.get_isAnchoring()) {
-
     if (c1.get_isAnchoring()) {
       c1.set_health(c1.get_health() - (damage * 2));
       c1.resetAnchoring();
@@ -95,6 +97,7 @@ void Minion::attack(int damage, Character &c1, Character &c2) {
       c2.resetAnchoring();
     }
 
+    // if no buffs/debuffs are present, do simple damage
   } else {
     c1.set_health(c1.get_health() - damage);
     c2.set_health(c2.get_health() - damage);
@@ -103,11 +106,13 @@ void Minion::attack(int damage, Character &c1, Character &c2) {
 
 void Minion::attack(int damage, Character &c1, Character &c2, Character &c3) {
 
+  // if weakening buff is active, reduce the damage done by minion
   if (c1.get_isWeakening() || c2.get_isWeakening() || c3.get_isWeakening()) {
     c1.set_health(c1.get_health() - (damage / 2));
     c2.set_health(c2.get_health() - (damage / 2));
     c3.set_health(c3.get_health() - (damage / 2));
 
+    // if protection buff is active, reduce the damage done by minion
   } else if (c1.get_isProtecting() || c2.get_isProtecting() ||
              c3.get_isProtecting()) {
     c1.set_health(c1.get_health() - max(0, damage - c1.getProtectionAmount()));
@@ -115,9 +120,9 @@ void Minion::attack(int damage, Character &c1, Character &c2, Character &c3) {
     c3.set_health(c3.get_health() - max(0, damage - c3.getProtectionAmount()));
     c1.resetProtection();
 
+    // if anchoring buff is active, redirect damage to one character
   } else if (c1.get_isAnchoring() || c2.get_isAnchoring() ||
              c3.get_isAnchoring()) {
-
     if (c1.get_isAnchoring()) {
       c1.set_health(c1.get_health() - (damage * 3));
       c1.resetAnchoring();
@@ -127,9 +132,9 @@ void Minion::attack(int damage, Character &c1, Character &c2, Character &c3) {
     } else if (c3.get_isAnchoring()) {
       c3.set_health(c3.get_health() - (damage * 3));
     }
-
   }
 
+  // if no buffs/debuffs are present, do simple damage
   else {
     c1.set_health(c1.get_health() - damage);
     c2.set_health(c2.get_health() - damage);
