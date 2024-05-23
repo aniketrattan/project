@@ -9,11 +9,16 @@
 #include "Game.h"
 
 class Save {
+    std::string generateFilename(const std::string& prefix);
+    void appendToFile(const std::string& filename,const std::string& data);
 public:
-    void saveCharacter(Character& character,std::string& filename);
-    void saveMinion(Minion& minion,std::string& filename);
-    void saveMiniBoss(MiniBoss& miniBoss,std::string& filename);
-    void saveBoss(Boss& boss,std::string& filename);
+    void saveCharacter(Character& character,const std::string& characterType);
+    void saveMinion(Minion& minion);
+    void saveMiniBoss(MiniBoss& miniBoss);
+    void saveBoss(Boss& boss);
+
+    void loadCharacter(Fighter& fighter, Wizard& wizard, Cleric& cleric, const std::string& filename);
+    void loadMinions(Minion& minion, MiniBoss& miniBoss, Boss& boss, const std::string& filename);
 };
 
-#endif // SAVE_H
+#endif 
