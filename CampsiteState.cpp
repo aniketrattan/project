@@ -2,6 +2,8 @@
 
 #include "Definitions.h"
 
+#include "Save1.h"
+
 namespace graphics {
 
 CampsiteState::CampsiteState(GameDataRef data) : _data(data) {}
@@ -21,6 +23,14 @@ void CampsiteState::handleInput() {
 
   while (_data->window.pollEvent(event)) {
     if (sf::Event::Closed == event.type) {
+      std::ofstream writeFile(SAVE_MONSTER_FILE);
+
+      if (writeFile.is_open()) {
+        writeFile << 1;
+      }
+
+      writeFile.close();
+      _data->window.close();
       _data->window.close();
     }
     if (event.type == (sf::Event::KeyPressed)) {
@@ -29,9 +39,10 @@ void CampsiteState::handleInput() {
         menuBeginning = 3;
         menuEnd = 4;
       }
-      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+      if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)) {
         // transports to encounter
-        _data->machine.AddState(StateRef(new EncounterState(this->_data)), true);
+        _data->machine.AddState(StateRef(new MapState(this->_data)),
+                                true);
       }
     }
   }

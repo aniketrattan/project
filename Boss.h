@@ -1,15 +1,15 @@
 #ifndef BOSS_H
 #define BOSS_H
 
-#include "Character.h"
 #include "Minion.h"
-#include <cstdlib> // For rand() and srand()
-#include <ctime>   // For time()
+#include "MiniBoss.h"
 
-
-class Boss : public Minion {
+class Boss : public MiniBoss {
 public:
+  // constructor
   Boss(string name, int health, int level);
+
+  // attack
   void specialAttack(Character &c1, Character &c2, Character &c3);
 };
 

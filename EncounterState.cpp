@@ -1,11 +1,13 @@
 #include "EncounterState.h"
 
+#include <fstream>
+
 #include "Boss.h"
+#include "CampsiteState.h"
 #include "Character.h"
 #include "Cleric.h"
 #include "Fighter.h"
 #include "Game.h"
-#include "MapState.h"
 #include "MiniBoss.h"
 #include "Minion.h"
 #include "Wizard.h"
@@ -16,13 +18,96 @@ EncounterState::EncounterState(GameDataRef data) : _data(data) {}
 
 // initialize function
 void EncounterState::Init() {
+  std::ifstream readFileMon;
+  readFileMon.open(SAVE_MONSTER_FILE);
+  if (readFileMon.is_open()) {
+    while (!readFileMon.eof()) {
+      readFileMon >> monsterCount;
+    }
+  }
+
+  readFileMon.close();
+
+  std::ifstream readFileBlade;
+  readFileBlade.open(SAVE_BLADE_FILE);
+  if (readFileBlade.is_open()) {
+    while (!readFileBlade.eof()) {
+      readFileBlade >> Items[0];
+    }
+  }
+
+  readFileBlade.close();
+
+  std::ifstream readFileRing;
+  readFileRing.open(SAVE_RING_FILE);
+  if (readFileRing.is_open()) {
+    while (!readFileRing.eof()) {
+      readFileRing >> Items[1];
+    }
+  }
+
+  readFileRing.close();
+
+  std::ifstream readFileWater;
+  readFileWater.open(SAVE_WATER_FILE);
+  if (readFileWater.is_open()) {
+    while (!readFileWater.eof()) {
+      readFileWater >> Items[2];
+    }
+  }
+
+  readFileWater.close();
+
+  std::ifstream readFileLife;
+  readFileLife.open(SAVE_LIFE_FILE);
+  if (readFileLife.is_open()) {
+    while (!readFileLife.eof()) {
+      readFileLife >> Items[3];
+    }
+  }
+
+  readFileLife.close();
+
+  std::ifstream readFileBoost;
+  readFileBoost.open(SAVE_BOOST_FILE);
+  if (readFileBoost.is_open()) {
+    while (!readFileBoost.eof()) {
+      readFileBoost >> Items[4];
+    }
+  }
+
+  readFileBoost.close();
+
+  std::ifstream readFileChance;
+  readFileChance.open(SAVE_CHANCE_FILE);
+  if (readFileChance.is_open()) {
+    while (!readFileChance.eof()) {
+      readFileChance >> Items[5];
+    }
+  }
+
+  readFileChance.close();
+
+  // loading items
+  if (Items[3] == 1) {
+    fHealth = 150;
+    wHealth = 150;
+    cHealth = 150;
+  }
+  if (Items[4] == 1) {
+    actionPoints = 3;
+    increase = true;
+  }
+  if (Items[5] == 1) {
+    secondChance = true;
+  }
 
   m1 = new Minion("Minion", 100, 1);
   mb1 = new MiniBoss("MiniBoss", 250, 2);
-  b1 = new Boss("Boss", 500, 3);
-  c1 = new Fighter(100);
-  c2 = new Wizard(100);
-  c3 = new Cleric(100);
+  b1 = new Boss("Boss", 300, 3);
+  c1 = new Fighter(fHealth);
+  c2 = new Wizard(wHealth);
+  c3 = new Cleric(cHealth);
 
   game.setMinion(m1);
   game.setMiniBoss(mb1);
@@ -30,6 +115,22 @@ void EncounterState::Init() {
   game.setFighter(c1);
   game.setWizard(c2);
   game.setCleric(c3);
+
+  // reset
+  c1->resetAnchoring();
+  c2->resetAnchoring();
+  c3->resetAnchoring();
+
+  // equiping weapons
+  if (Items[0] == 1) {
+    c1->equipReapersBlade();
+  }
+  if (Items[1] == 1) {
+    c2->equipRingOfFire();
+  }
+  if (Items[2] == 1) {
+    c3->equipHolyWater();
+  }
 
   // load background
   _data->assets.LoadTexture("Encounter Background",
@@ -99,7 +200,7 @@ void EncounterState::Init() {
   menuBeginning = 1;
   menuEnd = 4;
   // action point
-  _actionNum = new ActionPoints(_data);
+  _actionNum = new ActionPoints(_data, actionPoints);
 
   // round() calls round function
   _fighterNum->UpdateHealth(c1->get_health());
@@ -120,12 +221,21 @@ void EncounterState::handleInput() {
 
   while (_data->window.pollEvent(event)) {
     if (sf::Event::Closed == event.type) {
+      std::ofstream writeFile(SAVE_MONSTER_FILE);
+
+      if (writeFile.is_open()) {
+        monsterCount = 1;
+        writeFile << monsterCount;
+      }
+
+      writeFile.close();
+
       _data->window.close();
     }
     if (event.type == (sf::Event::KeyPressed)) {
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)) {
-        game.round();
         // monster attack
+
         if (monsterCount == 3) {
           b1->specialAttack(c1[0], c2[0], c3[0]);
         } else if (monsterCount == 2) {
@@ -133,31 +243,46 @@ void EncounterState::handleInput() {
         } else {
           m1->specialAttack(c1[0], c2[0], c3[0]);
         }
-        actionPoints = 2;
+
+        game.round();
+
+        if (increase == true) {
+          actionPoints = 3;
+        } else {
+          actionPoints = 2;
+        }
         _actionNum->UpdateAction(actionPoints);
         // updates health
         _fighterNum->UpdateHealth(c1->get_health());
+        c1->checkHealth();
         _wizardNum->UpdateHealth(c2->get_health());
+        c2->checkHealth();
         _clericNum->UpdateHealth(c3->get_health());
+        c3->checkHealth();
         if (monsterCount == 3) {
-          _encounterNum->UpdateHealth(b1->get_health());
+          _encounterNum->UpdateHealth(b1->get_health(), b1->get_bleed());
         } else if (monsterCount == 2) {
-          _encounterNum->UpdateHealth(mb1->get_health());
+          _encounterNum->UpdateHealth(mb1->get_health(), mb1->get_bleed());
         } else {
-          _encounterNum->UpdateHealth(m1->get_health());
+          _encounterNum->UpdateHealth(m1->get_health(), m1->get_bleed());
         }
+        c1->resetAnchoring();
+        c2->resetAnchoring();
+        c3->resetAnchoring();
       }
 
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1)) {
         if (actionPoints > 0) {
           if (menuLock == 0) {
-            // locks menu to fighter
-            menuLock = 1;
-            // tells which string values are to be drawn
-            menuBeginning = 5;
-            menuEnd = 6;
-            // draws backspace
-            backOn = 2;
+            if (c1->get_isAlive()) {
+              // locks menu to fighter
+              menuLock = 1;
+              // tells which string values are to be drawn
+              menuBeginning = 5;
+              menuEnd = 6;
+              // draws backspace
+              backOn = 2;
+            }
           }
         }
       }
@@ -165,13 +290,15 @@ void EncounterState::handleInput() {
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2)) {
         if (actionPoints > 0) {
           if (menuLock == 0) {
-            // locks menu to wizard
-            menuLock = 2;
-            // tells which string values are to be drawn
-            menuBeginning = 7;
-            menuEnd = 8;
-            // draws backspace
-            backOn = 2;
+            if (c2->get_isAlive()) {
+              // locks menu to wizard
+              menuLock = 2;
+              // tells which string values are to be drawn
+              menuBeginning = 7;
+              menuEnd = 8;
+              // draws backspace
+              backOn = 2;
+            }
           }
         }
       }
@@ -179,13 +306,15 @@ void EncounterState::handleInput() {
       if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3)) {
         if (actionPoints > 0) {
           if (menuLock == 0) {
-            // locks menu to cleric
-            menuLock = 3;
-            // tells which string values are to be drawn
-            menuBeginning = 9;
-            menuEnd = 10;
-            // draws backspace
-            backOn = 2;
+            if (c3->get_isAlive()) {
+              // locks menu to cleric
+              menuLock = 3;
+              // tells which string values are to be drawn
+              menuBeginning = 9;
+              menuEnd = 10;
+              // draws backspace
+              backOn = 2;
+            }
           }
         }
       }
@@ -206,11 +335,11 @@ void EncounterState::handleInput() {
           menuEnd = 4;
           menuLock = 0;
           if (monsterCount == 3) {
-            _encounterNum->UpdateHealth(b1->get_health(), 1);
+            _encounterNum->UpdateHealth(b1->get_health(), b1->get_bleed());
           } else if (monsterCount == 2) {
-            _encounterNum->UpdateHealth(mb1->get_health(), 1);
+            _encounterNum->UpdateHealth(mb1->get_health(), mb1->get_bleed());
           } else {
-            _encounterNum->UpdateHealth(m1->get_health(), 1);
+            _encounterNum->UpdateHealth(m1->get_health(), m1->get_bleed());
           }
           backOn = 0;
         }
@@ -244,11 +373,11 @@ void EncounterState::handleInput() {
           menuEnd = 4;
           menuLock = 0;
           if (monsterCount == 3) {
-            _encounterNum->UpdateHealth(b1->get_health(), 0);
+            _encounterNum->UpdateHealth(b1->get_health(), b1->get_bleed());
           } else if (monsterCount == 2) {
-            _encounterNum->UpdateHealth(mb1->get_health(), 0);
+            _encounterNum->UpdateHealth(mb1->get_health(), mb1->get_bleed());
           } else {
-            _encounterNum->UpdateHealth(m1->get_health(), 0);
+            _encounterNum->UpdateHealth(m1->get_health(), m1->get_bleed());
           }
           backOn = 0;
         }
@@ -303,51 +432,109 @@ void EncounterState::handleInput() {
 }
 
 void EncounterState::update(float dt) {
-  // general menu
-  // create function to do this more descretly
-
-  // end round
-  /*
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num0)) {
-    if (menuLock == 0) {
-    }
-  }*/
-  // updates the encounter damage
-
+  // update encounter condition
   m1->checkHealth();
   mb1->checkHealth();
   b1->checkHealth();
 
-  // runs if minion is dead
+  // runs if boss is dead
   if (monsterCount == 3) {
     if (!b1->get_isAlive()) {
-      // win message
-      // display amount of gold made
+      // save
+      saver.saveMinion(m1[0]);
+      saver.saveMiniBoss(mb1[0]);
+      saver.saveBoss(b1[0]);
       // transports to map
       game.round();
-      set_monstercount(game.getMonsterCount());
-      std::cout << game.getMonsterCount() << endl;
-      _data->machine.AddState(StateRef(new MapState(this->_data)));
+      // closes the game
+      std::ofstream writeFile(SAVE_MONSTER_FILE);
+
+      if (writeFile.is_open()) {
+        monsterCount = 1;
+        writeFile << monsterCount;
+      }
+
+      writeFile.close();
+
+      // frees memory
+      game.~Game();
+
+      _data->window.close();
     }
+    // run if miniboss is dead
   } else if (monsterCount == 2) {
     if (!mb1->get_isAlive()) {
-      // win message
-      // display amount of gold made
-      // transports to map
+      // save
+      saver.saveMinion(m1[0]);
+      saver.saveMiniBoss(mb1[0]);
+      saver.saveBoss(b1[0]);
+
       game.round();
-      set_monstercount(game.getMonsterCount());
-      std::cout << game.getMonsterCount() << endl;
-      _data->machine.AddState(StateRef(new MapState(this->_data)));
+      std::ofstream writeFile(SAVE_MONSTER_FILE);
+
+      if (writeFile.is_open()) {
+        monsterCount = monsterCount + 1;
+        writeFile << monsterCount;
+      }
+
+      writeFile.close();
+
+      // transports to campsite
+      _data->machine.AddState(StateRef(new CampsiteState(this->_data)));
     }
+    // run if minion is dead
   } else {
     if (!m1->get_isAlive()) {
-      // win message
-      // display amount of gold made
-      // transports to map
+      // save
+      saver.saveMinion(m1[0]);
+      saver.saveMiniBoss(mb1[0]);
+      saver.saveBoss(b1[0]);
+
       game.round();
-      set_monstercount(game.getMonsterCount());
-      std::cout << game.getMonsterCount() << endl;
-      _data->machine.AddState(StateRef(new MapState(this->_data)));
+      std::ofstream writeFile(SAVE_MONSTER_FILE);
+
+      if (writeFile.is_open()) {
+        monsterCount = monsterCount + 1;
+        writeFile << monsterCount;
+      }
+
+      writeFile.close();
+
+      // transports to campsite
+      _data->machine.AddState(StateRef(new CampsiteState(this->_data)));
+    }
+  }
+  // update encounter condition
+  c1->checkHealth();
+  c2->checkHealth();
+  c3->checkHealth();
+
+  // runs if fighter is dead
+  if (!c1->get_isAlive()) {
+    // if second chance is bought
+    if (secondChance == true) {
+      c1->set_health(50);
+      _fighterNum->UpdateHealth(c1->get_health());
+      secondChance = false;
+    }
+  }
+  // runs if wizard is dead
+  if (!c2->get_isAlive()) {
+    // if second chance is bought
+    if (secondChance == true) {
+      c2->set_health(50);
+      _wizardNum->UpdateHealth(c2->get_health());
+      secondChance = false;
+    }
+  }
+
+  // runs if cleric is dead
+  if (!c3->get_isAlive()) {
+    // if second chance is bought
+    if (secondChance == true) {
+      c3->set_health(50);
+      _clericNum->UpdateHealth(c3->get_health());
+      secondChance = false;
     }
   }
 }

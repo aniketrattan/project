@@ -6,11 +6,17 @@
 #include "Wizard.h"
 
 class Cleric : public Character {
-  protected:
+protected:
   bool hasHolyWater = false;
+
 public:
+  // constructor
   Cleric(int health);
+
+  // equip item
   void equipHolyWater();
+
+  // cleanse ability
   void cleanse(Fighter &fighter, Wizard &wizard);
 };
 

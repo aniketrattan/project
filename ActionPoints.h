@@ -15,7 +15,7 @@ class ActionPoints {
   sf::Text _actionPoints;
 
  public:
-  ActionPoints(GameDataRef data);
+  ActionPoints(GameDataRef data, int AC);
 
   void Draw();
   void UpdateAction(int actions);

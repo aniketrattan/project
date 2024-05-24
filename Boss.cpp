@@ -1,11 +1,12 @@
 #include "Boss.h"
 
-Boss::Boss(string name, int health, int level) : Minion(name, health, level) {
+// constructor
+Boss::Boss(string name, int health, int level) : MiniBoss(name, health, level) {
   srand(time(nullptr));
 };
 
+// attack
 void Boss::specialAttack(Character &c1, Character &c2, Character &c3) {
-
   // Generate a random number between 0 and 99
   int chance = rand() % 100;
   if (chance < 75) { // 75% chance
@@ -26,17 +27,19 @@ void Boss::specialAttack(Character &c1, Character &c2, Character &c3) {
 
     if (attackType == 0) { // Fire attack
       for (int i = 0; i < 3; ++i) {
-        targets[indexes[i]]->set_fire(targets[indexes[i]]->get_fire() + 2);
+        targets[indexes[i]]->set_fire(targets[indexes[i]]->get_fire() + 5);
       }
     } else { // Poison attack
       for (int i = 0; i < 3; ++i) {
-        targets[indexes[i]]->set_poison(targets[indexes[i]]->get_poison() + 2);
+        targets[indexes[i]]->set_poison(targets[indexes[i]]->get_poison() + 5);
       }
     }
+    // random damage between 30 and 40
     int damage = rand() % 11 + 30;
     attack(damage, c1, c2, c3);
 
   } else {
+    // random damage between 30 and 40
     int damage = rand() % 11 + 30;
     attack(damage, c1, c2, c3);
   }

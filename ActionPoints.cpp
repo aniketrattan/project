@@ -1,7 +1,7 @@
 #include "ActionPoints.h"
 
 namespace graphics {
-ActionPoints::ActionPoints(GameDataRef data) : _data(data) {
+ActionPoints::ActionPoints(GameDataRef data, int AC) : _data(data) {
   _actionDisplay.setFont(_data->assets.GetFont("menu"));
   _actionDisplay.setString("Action points:");
   _actionDisplay.setCharacterSize(32);
@@ -11,7 +11,7 @@ ActionPoints::ActionPoints(GameDataRef data) : _data(data) {
   _actionDisplay.setPosition(SCREEN_HEIGHT / 5, 5 * SCREEN_WIDTH / 7);
 
   _actionPoints.setFont(_data->assets.GetFont("menu"));
-  _actionPoints.setString("2");
+  _actionPoints.setString(to_string(AC));
   _actionPoints.setCharacterSize(32);
   _actionPoints.setFillColor(sf::Color::White);
   _actionPoints.setOrigin(_actionPoints.getGlobalBounds().width / 2,
