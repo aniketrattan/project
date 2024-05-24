@@ -1,0 +1,16 @@
+#ifndef SAVE_H
+#define SAVE_H
+
+#include <fstream>
+#include "Character.h"
+#include "Minion.h"
+
+class Save {
+    std::string generateFilename(const std::string& prefix);
+    void appendToFile(const std::string& filename,const std::string& data);
+public:
+    void saveCharacter(Character& character,const std::string& characterType);
+    void saveMinion(Minion& minion);
+};
+
+#endif 
