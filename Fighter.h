@@ -5,7 +5,7 @@
 
 class Fighter : public Character {
 protected:
-  bool hasReapersBlade;
+  bool hasReapersBlade = false;
   int bleedAmount = 1;
 
 public:

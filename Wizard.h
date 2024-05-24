@@ -5,7 +5,7 @@
 
 class Wizard : public Character {
 protected:
-  bool hasRingOfFire;
+  bool hasRingOfFire = false;
 
 public:
   // constructor
