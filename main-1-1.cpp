@@ -6,8 +6,8 @@
 #include "Items.cpp"
 #include "MiniBoss.cpp"
 #include "Minion.cpp"
-#include "Shop.cpp"
 #include "Save1.h"
+#include "Shop.cpp"
 #include "Wizard.cpp"
 #include <iostream>
 #include <string>
@@ -37,10 +37,15 @@ int main() {
   c2.resetAnchoring();
   c3.resetAnchoring();
 
-  c2.weakeningRay();
-  m1.specialAttack(c1, c2, c3);
+  c3.protection();
+  shop.buyItem(c3, "Holy Water");
+  cout << c3.get_isProtecting() << endl;
 
   game.round();
+
+  cout << c1.getProtectionAmount() << endl;
+  cout << c3.getProtectionAmount() << endl;
+  mb1.specialAttack(c1, c2, c3);
 
   cout << c1.get_health() << endl;
   cout << c2.get_health() << endl;

@@ -50,11 +50,14 @@ void Minion::specialAttack(Character &c1, Character &c2, Character &c3) {
   // Deal damage to the chosen character
   int damage = rand() % 11 + 15;
 
+  // if any buff/debuff is active, alter the damage accordingly
   if (c1.get_isAnchoring() || c2.get_isAnchoring() || c3.get_isAnchoring()) {
     attack(damage, c1);
-  } else if (c1.get_isWeakening() || c2.get_isWeakening() || c3.get_isWeakening()) {
+  } else if (c1.get_isWeakening() || c2.get_isWeakening() ||
+             c3.get_isWeakening()) {
     attack((damage / 2), *target);
-  } else if (c1.get_isProtecting() || c2.get_isProtecting() || c3.get_isProtecting()) {
+  } else if (c1.get_isProtecting() || c2.get_isProtecting() ||
+             c3.get_isProtecting()) {
     attack((damage - c1.getProtectionAmount()), *target);
   } else {
     attack(damage, *target);
@@ -68,7 +71,6 @@ void Minion::attack(int damage, Attack &object) {}
 void Minion::attack(int damage, Character &c1) {
   c1.set_health(c1.get_health() - damage);
 }
-
 void Minion::attack(int damage, Character &c1, Character &c2) {
   c1.set_health(c1.get_health() - damage);
   c2.set_health(c2.get_health() - damage);

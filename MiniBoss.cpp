@@ -31,17 +31,19 @@ void MiniBoss::specialAttack(Character &c1, Character &c2, Character &c3) {
     }
     // random damage between 25 and 35
     int damage = rand() % 11 + 25;
+    cout << damage << endl;
 
+    // if any buff/debuff is active, alter the damage accordingly
     if (c1.get_isAnchoring() || c2.get_isAnchoring() || c3.get_isAnchoring()) {
       attack(damage, c1);
-    } else if (c1.get_isWeakening() || c2.get_isWeakening() ||
-               c3.get_isWeakening()) {
-      attack((damage / 2), *targets[index1], *targets[index2]);
-    } else if (c1.get_isProtecting() || c2.get_isProtecting() ||
-               c3.get_isProtecting()) {
-      attack((damage - c1.getProtectionAmount()), *targets[index1],
-             *targets[index2]);
-    } else {
+    } 
+    if (c1.get_isWeakening() || c2.get_isWeakening() || c3.get_isWeakening()) {
+        attack((damage / 2), *targets[index1], *targets[index2]);
+    } 
+    if (c1.get_isProtecting() || c2.get_isProtecting() || c3.get_isProtecting()) {
+          attack((damage - c1.getProtectionAmount()), *targets[index1], *targets[index2]);
+    } 
+    else {
       attack(damage, *targets[index1], *targets[index2]);
     }
 
@@ -54,6 +56,11 @@ void MiniBoss::specialAttack(Character &c1, Character &c2, Character &c3) {
     } while (index4 == index3);
     // random damage between 25 and 35
     int damage = rand() % 11 + 25;
+    cout << damage << endl;
+    if (c1.get_isProtecting() || c2.get_isProtecting() || c3.get_isProtecting()) {
+          attack((damage - c1.getProtectionAmount()), *newtargets[index3], *newtargets[index4]);
+    } else {
     attack(damage, *newtargets[index3], *newtargets[index4]);
+    }
   }
 }
