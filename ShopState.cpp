@@ -90,7 +90,8 @@ void ShopState::Init() {
   readFileChance.close();
 
   for (int j = 0; j <6; j++){
-    _boughtItems += fileItems[j];
+    if (fileItems[j] == 1)
+     _bought[j] = j;
   }
 
   // tells what index's of the menu vector should be drawn
