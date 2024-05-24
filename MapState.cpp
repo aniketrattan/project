@@ -1,6 +1,7 @@
 #include "MapState.h"
-#include "EncounterState.h"
+
 #include "CampsiteState.h"
+#include "EncounterState.h"
 #include "ShopState.h"
 
 namespace graphics {
@@ -21,6 +22,13 @@ void MapState::handleInput() {
 
   while (_data->window.pollEvent(event)) {
     if (sf::Event::Closed == event.type) {
+      std::ofstream writeFile(SAVE_MONSTER_FILE);
+
+      if (writeFile.is_open()) {
+        writeFile << 1;
+      }
+
+      writeFile.close();
       _data->window.close();
     }
   }
@@ -44,7 +52,7 @@ void MapState::Draw(float dt) {
   this->_data->window.draw(_background);
 
   this->_menuPaths->Draw(menuBeginning, menuEnd);
-  Title->Draw(1,1);
+  Title->Draw(1, 1);
 
   this->_data->window.display();
 }

@@ -5,7 +5,6 @@
 #include <iostream>
 #include <sstream>
 
-#include "save.h"
 #include "ActionPoints.h"
 #include "Boss.h"
 #include "Character.h"
@@ -24,7 +23,7 @@
 
 namespace graphics {
 
-class EncounterState : public State, public save {
+class EncounterState : public State {
  private:
   GameDataRef _data;
   // sprites
@@ -45,6 +44,7 @@ class EncounterState : public State, public save {
 
   // action point tally
   int actionPoints = 2;
+  bool increase = false;
 
   // display for menus
   MenuDisplay* _menuEncounter;
@@ -92,9 +92,22 @@ class EncounterState : public State, public save {
   Cleric* c3;
 
   Game game;
+  Shop shop;
+  Save saver;
 
-  //tells what monster we're on
-  int monsterCount = get_monstercount();
+  // tells what monster we're on
+  int monsterCount;
+
+  // says what items are equipped
+  vector<int> Items = {7, 7, 7, 7, 7, 7};
+
+  // health
+  int fHealth = 100;
+  int wHealth = 100;
+  int cHealth = 100;
+
+  // second chance
+  bool secondChance = false;
 
  public:
   EncounterState(GameDataRef data);

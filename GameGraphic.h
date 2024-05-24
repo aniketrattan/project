@@ -20,7 +20,7 @@ struct GameData {
 
 typedef shared_ptr<GameData> GameDataRef;
 
-class GameGraphic {
+class GameGraphic{
  private:
   // our frame rate, is currently set to 60 per second
   const float dt = 1.0f / 60.0f;
@@ -31,14 +31,7 @@ class GameGraphic {
   void Run();
 
  public:
-  /*Minion* m1;
-  Minion* m2;
-  Minion* m3;
-  MiniBoss* mb1;
-  Boss* b1;
-  Fighter* c1;
-  Wizard* c2;
-  Cleric* c3;*/
+ 
 
   GameGraphic(int width, int height, string title);
 };

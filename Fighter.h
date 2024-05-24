@@ -2,16 +2,20 @@
 #define FIGHTER_H
 
 #include "Character.h"
-#include "Minion.h"
 
 class Fighter : public Character {
 protected:
-  bool hasReapersBlade;
+  bool hasReapersBlade = false;
   int bleedAmount = 1;
 
 public:
+  // constructor
   Fighter(int health);
+
+  // equip item
   void equipReapersBlade();
+
+  // attack
   void serratedSlash(Minion &target);
 };
 

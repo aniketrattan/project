@@ -3,25 +3,54 @@
 #include "MapState.h"
 
 graphics::GameGraphic::GameGraphic(int width, int height, string title) {
-  // sets all chararacter variables
-  /*m1 = new Minion("Minion", 100, 1);
-  m2 = new Minion("Minion2", 150, 1);
-  m3 = new Minion("Minion3", 200, 1);
-  mb1 = new MiniBoss("MiniBoss", 250, 2);
-  b1 = new Boss("Boss", 500, 3);
-  c1 = new Fighter(100);
-  c2 = new Wizard(100);
-  c3 = new Cleric(100);
+  // resets items
+  std::ofstream writeFileBlade(SAVE_BLADE_FILE);
 
-  Game game;
-  Shop shop;
+  if (writeFileBlade.is_open()) {
+    writeFileBlade << 0;
+  }
 
-  game.setMinion(m1);
-  game.setMiniBoss(mb1);
-  game.setBoss(b1);
-  game.setFighter(c1);
-  game.setWizard(c2);
-  game.setCleric(c3);*/
+  writeFileBlade.close();
+
+  std::ofstream writeFileRing(SAVE_RING_FILE);
+
+  if (writeFileRing.is_open()) {
+    writeFileRing << 0;
+  }
+
+  writeFileRing.close();
+
+  std::ofstream writeFileWater(SAVE_WATER_FILE);
+
+  if (writeFileWater.is_open()) {
+    writeFileWater << 0;
+  }
+
+  writeFileWater.close();
+
+  std::ofstream writeFileLife(SAVE_LIFE_FILE);
+
+  if (writeFileLife.is_open()) {
+    writeFileLife << 0;
+  }
+
+  writeFileLife.close();
+
+  std::ofstream writeFileBoost(SAVE_BOOST_FILE);
+
+  if (writeFileBoost.is_open()) {
+    writeFileBoost << 0;
+  }
+
+  writeFileBoost.close();
+
+  std::ofstream writeFileChance(SAVE_CHANCE_FILE);
+
+  if (writeFileChance.is_open()) {
+    writeFileChance << 0;
+  }
+
+  writeFileChance.close();
   // set the game window
   _data->window.create(sf::VideoMode(width, height), title,
                        sf::Style::Close | sf::Style::Titlebar);
