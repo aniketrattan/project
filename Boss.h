@@ -2,8 +2,9 @@
 #define BOSS_H
 
 #include "Minion.h"
+#include "MiniBoss.h"
 
-class Boss : public Minion {
+class Boss : public MiniBoss {
 public:
   // constructor
   Boss(string name, int health, int level);

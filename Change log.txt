@@ -1,0 +1,3 @@
+Removed the virtual block function. The characters have buffs like protection and weakening ray so there is no need of a separate block function
+
+Removed weapons and replaced them with items because that gives more control over buffs and debuffs

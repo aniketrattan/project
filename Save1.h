@@ -6,7 +6,6 @@
 #include "Minion.h"
 #include "MiniBoss.h"
 #include "Boss.h"
-#include "Game.h"
 
 class Save {
     std::string generateFilename(const std::string& prefix);

@@ -7,6 +7,7 @@
 #include "MiniBoss.cpp"
 #include "Minion.cpp"
 #include "Shop.cpp"
+#include "Save1.h"
 #include "Wizard.cpp"
 #include <iostream>
 #include <string>
@@ -32,12 +33,12 @@ int main() {
   game.setWizard(&c2);
   game.setCleric(&c3);
   c1.set_money(200);
+  c1.resetAnchoring();
   c2.resetAnchoring();
+  c3.resetAnchoring();
 
   c2.weakeningRay();
-  mb1.specialAttack(c1, c2, c3);
-
-  shop.buyItem(c1, "Second Chance");
+  m1.specialAttack(c1, c2, c3);
 
   game.round();
 

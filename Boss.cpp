@@ -1,7 +1,7 @@
 #include "Boss.h"
 
 // constructor
-Boss::Boss(string name, int health, int level) : Minion(name, health, level) {
+Boss::Boss(string name, int health, int level) : MiniBoss(name, health, level) {
   srand(time(nullptr));
 };
 
@@ -27,11 +27,11 @@ void Boss::specialAttack(Character &c1, Character &c2, Character &c3) {
 
     if (attackType == 0) { // Fire attack
       for (int i = 0; i < 3; ++i) {
-        targets[indexes[i]]->set_fire(targets[indexes[i]]->get_fire() + 2);
+        targets[indexes[i]]->set_fire(targets[indexes[i]]->get_fire() + 5);
       }
     } else { // Poison attack
       for (int i = 0; i < 3; ++i) {
-        targets[indexes[i]]->set_poison(targets[indexes[i]]->get_poison() + 2);
+        targets[indexes[i]]->set_poison(targets[indexes[i]]->get_poison() + 5);
       }
     }
     // random damage between 30 and 40
