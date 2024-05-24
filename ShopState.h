@@ -13,6 +13,7 @@
 #include "state.h"
 #include "ShopUpper.h"
 #include "EncounterState.h"
+#include "Shop.h"
 
 namespace graphics {
 
@@ -29,8 +30,13 @@ class ShopState : public State {
   DescriptionDisplay* _ItemDescription;
   DescriptionDisplay* _ItemDescriptionLast;
 
+  //shop setup
+  Shop shop;
+
   //need to work
-  Fighter* c1;
+  Fighter* c1 = new Fighter(100);
+  Wizard* c2 = new Wizard(100);
+  Cleric* c3 = new Cleric(100);
 
   //money
   int money = c1->get_money();
@@ -39,13 +45,15 @@ class ShopState : public State {
   int menuEnd;
 
   vector<string> items = {"1.Reapers blade 200g", "2.Fire Ring 200g", "3.Holy Water 200g", 
-  "4.Life essence 400g", "5.Action boost 500g", "6.Second chance 500g"};
+  "4.Life essence 400g", "5.Action boost 400g", "6.Second chance 400g"};
 
   vector<string> descriptions = {"adds more damage and \nbleed to Severing Slash","increases damage for fireball","increases damage \nmitagation from protection",
   "increase max health \nof all characters", "adds 1 more action point \nper round", 
-  "when a character would drop \nto 0 health they instead go\nto half of their max. This item \ncan only be used once."};
+  "when a character would drop \nto 0 health they instead go\nto 50 health. This item \ncan only be used once."};
 
   vector<string> upper = {"Gold: ", "up) encounter"};
+
+  vector<int> fileItems = {7,7,7,7,7,7};
 
  public:
   ShopState(GameDataRef data);

@@ -40,7 +40,7 @@ void NumDisplay::UpdateHealth(int health) {
 }
 
 void NumDisplay::UpdateHealth(int health, int bleed) {
-  _bleed += bleed;
+  _bleed = bleed;
   string bleedDis = std::to_string(_bleed);
   _health.setString(std::to_string(health) + " - " + bleedDis + " bleed");
   _health.setOrigin(_health.getGlobalBounds().width / 2 - 10,

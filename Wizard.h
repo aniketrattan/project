@@ -2,16 +2,20 @@
 #define WIZARD_H
 
 #include "Character.h"
-#include "Minion.h"
 
 class Wizard : public Character {
-  protected:
-  bool hasRingOfFire;
+protected:
+  bool hasRingOfFire = false;
+
 public:
+  // constructor
   Wizard(int health);
+
+  // equip item
   void equipRingOfFire();
+
   void fireball(Minion &target);
   bool isProtecting = false;
 };
 
-#endif // WIZARD_H
+#endif // FIGHTER_H

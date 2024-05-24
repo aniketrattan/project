@@ -30,7 +30,7 @@ void ShopUpper::Draw(int begin, int end) {
 }
 
 void ShopUpper::Update(vector<string> menus, int money) {
-    _upper[0] .setString(menus[1] + std::to_string(money) + "g");
+    _upper[0] .setString(menus[0] + std::to_string(money) + "g");
 
 }
 
